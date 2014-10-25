@@ -8,7 +8,7 @@ import javax.swing.*;
 
 
 
-
+//COMENTARIO RIDICULO PARA PROBAR EL GITHUB
 
 
 public class Vista extends JFrame implements ActionListener{
