@@ -21,7 +21,7 @@ public class Aestrella
 	
 	ArrayList<Nodo> casillasProhibidas;
 	
-	ArrayList<Estado> tabla;
+	Tabla tabla;
 	
 	Nodo inicio;
 	Nodo meta;
@@ -31,11 +31,14 @@ public class Aestrella
 		campo = new int[sizeX][sizeY];
 		
                 this.casillasProhibidas = casillasProhibidas;
-                tabla = new ArrayList<>();
+                tabla = new Tabla();
                 numeroCasillasCerradas = 0;
                 
 		for (Nodo nodo : casillasProhibidas)
+                {
 			campo[nodo.getX()][nodo.getY()] = -1;
+                        numeroCasillasCerradas++;
+                }
 		
 		campo[inicio.getX()][inicio.getY()] = 1;
 		campo[meta.getX()][meta.getY()] = 2;
@@ -48,7 +51,7 @@ public class Aestrella
             return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
         }
 	
-	public void generarPosibles(Tabla tabla, Nodo nodo)
+	public void generarPosibles(Nodo nodo)
 	{
                 // Recorro las posiciones adyacentes al nodo.
 		for (int fila=Math.max(0, nodo.getX()-1);fila < Math.min(sizeX,nodo.getX()+2);fila++)
@@ -61,7 +64,7 @@ public class Aestrella
                                 // Calculamos la distancia desde el nodo actual al padre.
 				disOr = distanciaEuclidea(nodo,new Nodo(fila,columna));
                                 // Le sumamos la distancia ya recorrida por el padre para tener el recorrido total.
-                                disOr += tabla.getEstadoDelNodoPadre(nodo).getDistanciaOrigen();
+                                disOr += this.tabla.getEstadoDelNodo(nodo).getDistanciaOrigen();
                                 // Calculamos la distancia entre el nodo actual y el nodo final.
 				disDest = distanciaEuclidea(new Nodo(fila,columna),meta);
                                 
@@ -76,10 +79,41 @@ public class Aestrella
 	}
 	
 	
+        public Nodo seleccionarNodoOptimo(Nodo nodoOrigen)
+        {
+            int fmin = 0;
+            Nodo nodoOptimo = null;
+            
+            for (Estado estadoActual : tabla.getTabla())
+            {
+                // Si el nodo actual tiene como padre al nodo recibido y la distancia del nodo actual es
+                //if (estadoActual.getNodoPadre().equals(nodoOrigen) && estadoActual.getDistanciaTotal() )
+                //{
+                    
+                //}
+            }
+            return nodoOptimo;
+        }
         
         public void recorrer()
 	{
-		
+		Estado estado = new Estado(false,inicio,inicio,0,distanciaEuclidea(inicio,meta),distanciaEuclidea(inicio,meta));
+                
+                this.tabla.getTabla().add(estado);
+                
+                numeroCasillasCerradas++;
+                
+                Nodo nodoActual = inicio;
+                
+                while((numeroCasillasCerradas != sizeX*sizeY) && !nodoActual.equals(meta))
+                {
+                    generarPosibles(nodoActual);
+                    
+                    
+                    
+                    
+                }
+                    
 		
 		
 	}
@@ -95,9 +129,8 @@ public class Aestrella
                 casillasProhibidas.add(new Nodo(4,7));
                 
 		Aestrella prueba = new Aestrella(new Nodo(3,4),new Nodo(6,6),casillasProhibidas);
-		Tabla tabla = new Tabla();
 		
-		prueba.generarPosibles(tabla, new Nodo(3,4));
+		prueba.generarPosibles(new Nodo(3,4));
 		
 		System.out.println();
 	}

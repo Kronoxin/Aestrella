@@ -21,13 +21,13 @@ public class Tabla
         tabla = new ArrayList<>();
     }
     
-    public Estado getEstadoDelNodoPadre(Nodo nodoPadre)
+    public Estado getEstadoDelNodo(Nodo nodoABuscar)
     {
         Estado estadoDevolver = null;
         
         for (Estado estado : tabla)
         {
-            if (estado.getNodoActual().equals(nodoPadre))
+            if (estado.getNodoActual().equals(nodoABuscar))
                 estadoDevolver = estado;
         }
         return estadoDevolver;
