@@ -92,55 +92,60 @@ public class Vista extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed( ActionEvent evt ) {
-		//Se obtiene la cantidad de filas a crear como una cadena de caracter
-		String f = txt_filas.getText();
+            //Se obtiene la cantidad de filas a crear como una cadena de caracter
+            String f = txt_filas.getText();
  
-		//Se obtiene la cantidad de columnas a crear como una cadena de caracter
-        String c = txt_columnas.getText();
+            //Se obtiene la cantidad de columnas a crear como una cadena de caracter
+            String c = txt_columnas.getText();
         
-        //Se cambia de cadena de caracteres a numeros
-        int filas = Integer.parseInt(f);
-        int columnas = Integer.parseInt(c);
+            //Se cambia de cadena de caracteres a numeros
+            int filas = Integer.parseInt(f);
+            int columnas = Integer.parseInt(c);
 		
-		//Eliminamos los anteriores botones
-        panel_matriz_botones.removeAll();
+            //Eliminamos los anteriores botones
+            panel_matriz_botones.removeAll();
  
-        //Se crea una matriz de botones segun las filas y columnas entrantes
-  //      Boton_Matriz[][] matriz = new Boton_Matriz[filas][columnas];
-        generarMatrizDeBotones(filas,columnas);
+             //Se crea una matriz de botones segun las filas y columnas entrantes
+ 
+            generarMatrizDeBotones(filas,columnas);
 	}
 	
 	
 	public void generarMatrizDeBotones (int filas, int columnas){
+            if(filas >0 || columnas >0){
 		Boton_Matriz[][] matriz = new Boton_Matriz[filas][columnas];
 		
 		panel_matriz_botones.setLayout(new GridLayout(filas,columnas));
 		
-		for(int y=0; y<columnas; y++){ 
-            for(int x=0; x<filas; x++){
+                for(int y=0; y<columnas; y++){ 
+                    for(int x=0; x<filas; x++){
 
                     
-                    //Se crea el boton y se agrega a las celda de la matriz
-                    matriz[x][y] = new Boton_Matriz();
+                        //Se crea el boton y se agrega a las celda de la matriz
+                        matriz[x][y] = new Boton_Matriz();
                     
-                    //Se da el nombre en forma de coordenada enviando la fila y columna
-                    matriz[x][y].setNombre(x, y);
+                        //Se da el nombre en forma de coordenada enviando la fila y columna
+                        matriz[x][y].setNombre(x, y);
                     
-                    panel_matriz_botones.add(matriz[x][y]); //agrega boton a la grilla
-                    panel_matriz_botones.updateUI();
-                    this.setLocationRelativeTo(null); //posicion en el centro de la pantalla
+                        panel_matriz_botones.add(matriz[x][y]); //agrega boton a la grilla
+                        panel_matriz_botones.updateUI();
+                        this.setLocationRelativeTo(null); //posicion en el centro de la pantalla
+                    }
+                }
             }
-		}
+            else{
+                    System.out.println("Filas y columnas deben ser > 0");
+            }
 	}
 	
 	public static void main(String[] args) {
-		try {
+            try {
 			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception ex) {
+            } catch (Exception ex) {
 			ex.printStackTrace();
-        }
+            }
 		
 		Vista vista = new Vista();
-	}
+        }
 
 }
