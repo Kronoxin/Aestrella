@@ -8,37 +8,23 @@ import javax.swing.*;
 
 
 
-//COMENTARIO RIDICULO PARA PROBAR EL GITHUB
-//hola, otro comentario buenooo!
-//Y OTROOOO
-
-
 public class Vista extends JFrame implements ActionListener{
 	
 	
 	private Container contenedorPrincipal;
-	
-	JToolBar entrada_datos = new JToolBar();
-	JLabel label_filas = new JLabel("Filas");
-	JLabel label_columnas = new JLabel("Columnas");
-	JTextField txt_filas = new JTextField();
-	JTextField txt_columnas = new JTextField();
-	JButton boton_crear = new JButton("Crear");
-	
+        
+        ToolBar_Entrada entrada_datos = new ToolBar_Entrada();
 	
 	JPanel panel_menu = new JPanel();
 	JPanel panel_matriz_botones = new JPanel();
+        
+        Boton_Inicio boton_inicio = new Boton_Inicio();
+        Boton_Meta boton_meta = new Boton_Meta();
+        Boton_Prohibidas boton_prohibidas = new Boton_Prohibidas();
+        Boton_Restrictivas boton_restrictivas = new Boton_Restrictivas();
+        Boton_Reset boton_reset = new Boton_Reset();
 	
-	JButton boton_inicio = new JButton("Inicio");
-	JButton boton_meta = new JButton("Meta");
-	JButton boton_prohibidas = new JButton("Prohibidas"); 
-	JButton boton_restrictivas = new JButton("Restrictivas");
-	JButton boton_reset = new JButton("Reset");
-	
-	
-//	private int filas = 5;
-//	private int columnas = 5;
-//	Boton_Matriz[][] matriz = new Boton_Matriz[filas][columnas];
+
 	
 	
 	public Vista(){
@@ -48,43 +34,24 @@ public class Vista extends JFrame implements ActionListener{
 		contenedorPrincipal = this.getContentPane();
 		contenedorPrincipal.setLayout(new BorderLayout(0,0));
 		setContentPane(contenedorPrincipal);
+                this.setLocationRelativeTo(null);
 		setVisible(true);
 		
 		//añador al container, el panel_menu y el panel_matriz_botones
 		contenedorPrincipal.add(panel_menu, BorderLayout.NORTH);
 		contenedorPrincipal.add(panel_matriz_botones, BorderLayout.CENTER);
 		
-		//toolbar de entrada
-		txt_filas.setPreferredSize(new Dimension(50, 25));
-		txt_columnas.setPreferredSize(new Dimension(50, 25));
-		boton_crear.addActionListener(this);
-		boton_reset.addActionListener(this);
-		entrada_datos.add(label_filas);
-		entrada_datos.add(txt_filas);
-		entrada_datos.add(label_columnas);
-		entrada_datos.add(txt_columnas);
-		entrada_datos.add(boton_crear);
-		
+
+                //añado el toolbar y le pongo el acionlistener
 		panel_menu.add(entrada_datos, BorderLayout.PAGE_START);
+                entrada_datos.getBoton_crear().addActionListener(this);
 		
 		
 		//añado los botones Inicio, Meta, Prohibidas y Restrictivas al panel_menu
-		boton_inicio.setBackground(Color.YELLOW);
-		boton_inicio.setForeground(Color.BLACK);
 		panel_menu.add(boton_inicio);
-		
-		boton_meta.setBackground(Color.GREEN);
 		panel_menu.add(boton_meta);
-		
-		boton_prohibidas.setBackground(Color.BLACK);
-		boton_prohibidas.setForeground(Color.WHITE);
 		panel_menu.add(boton_prohibidas);
-		
-		boton_restrictivas.setBackground(Color.GRAY);
 		panel_menu.add(boton_restrictivas);
-		
-		boton_reset.setBackground(Color.WHITE);
-		boton_reset.setForeground(Color.RED);
 		panel_menu.add(boton_reset);
 		
 	
@@ -93,10 +60,10 @@ public class Vista extends JFrame implements ActionListener{
 	
 	public void actionPerformed( ActionEvent evt ) {
             //Se obtiene la cantidad de filas a crear como una cadena de caracter
-            String f = txt_filas.getText();
+            String f = entrada_datos.getTxt_filas().getText();
  
             //Se obtiene la cantidad de columnas a crear como una cadena de caracter
-            String c = txt_columnas.getText();
+            String c = entrada_datos.getTxt_columnas().getText();
         
             //Se cambia de cadena de caracteres a numeros
             int filas = Integer.parseInt(f);
@@ -105,8 +72,7 @@ public class Vista extends JFrame implements ActionListener{
             //Eliminamos los anteriores botones
             panel_matriz_botones.removeAll();
  
-             //Se crea una matriz de botones segun las filas y columnas entrantes
- 
+            //Se crea una matriz de botones segun las filas y columnas entrantes
             generarMatrizDeBotones(filas,columnas);
 	}
 	
@@ -129,7 +95,6 @@ public class Vista extends JFrame implements ActionListener{
                     
                         panel_matriz_botones.add(matriz[x][y]); //agrega boton a la grilla
                         panel_matriz_botones.updateUI();
-                        this.setLocationRelativeTo(null); //posicion en el centro de la pantalla
                     }
                 }
             }
