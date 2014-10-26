@@ -16,7 +16,7 @@ public class Panel_Matriz extends JPanel{
     
 
     public Panel_Matriz(){
-        
+        super();
     }
     
     
@@ -39,7 +39,7 @@ public class Panel_Matriz extends JPanel{
                         matriz[x][y].setNombre(x, y);
                         
                         
-                        this.add(matriz[x][y]); //agrega boton a la grilla
+                        this.add(matriz[x][y]); //agrega boton a la matriz ("grila")
                         this.updateUI();
                     }
                 }
