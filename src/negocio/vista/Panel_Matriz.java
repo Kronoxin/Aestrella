@@ -23,13 +23,20 @@ public class Panel_Matriz extends JPanel{
     public void generarMatrizDeBotones (int filas, int columnas){
         this.removeAll();
         
-            if(filas >0 || columnas >0){
+            if(filas >0 && columnas >0){
 		Boton_Matriz[][] matriz = new Boton_Matriz[filas][columnas];
 		
 		this.setLayout(new GridLayout(filas,columnas));
+                
+              //Recorrido que debe hacer el for para invertir la matriz de la forma que queremos
+              // NO FUNCIONA
+                
+            /*    for(int x=filas; x>=0; x--){ 
+                    for(int y=0; y<columnas; y++){
+                */       
 		
-                for(int y=0; y<columnas; y++){ 
-                    for(int x=0; x<filas; x++){
+                for(int x=0; x<filas; x++){ 
+                    for(int y=0; y<columnas; y++){
 
                     
                         //Se crea el boton y se agrega a las celda de la matriz
