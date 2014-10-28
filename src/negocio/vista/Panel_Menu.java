@@ -20,6 +20,7 @@ public class Panel_Menu extends JPanel{
         Boton_Prohibidas boton_prohibidas = new Boton_Prohibidas();
         Boton_Restrictivas boton_restrictivas = new Boton_Restrictivas();
         Boton_Reset boton_reset = new Boton_Reset();
+        Boton_Empezar boton_empezar = new Boton_Empezar();
         
         public Panel_Menu(){
             
@@ -27,11 +28,13 @@ public class Panel_Menu extends JPanel{
             this.add(entrada_datos, BorderLayout.PAGE_START);
             
             //añado los botones Inicio, Meta, Prohibidas y Restrictivas al panel_menu
+            
             this.add(boton_inicio);
             this.add(boton_meta);
             this.add(boton_prohibidas);
             this.add(boton_restrictivas);
             this.add(boton_reset);
+            this.add(boton_empezar);
         }
     
     
