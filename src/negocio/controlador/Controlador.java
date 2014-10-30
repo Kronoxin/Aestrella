@@ -5,10 +5,12 @@
  */
 package negocio.controlador;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
+import javax.swing.JButton;
 import negocio.vista.Vista;
 
 /**
@@ -26,8 +28,16 @@ public class Controlador implements ActionListener{
     
             public void hacerCambiosEnModelo(Component fuente)
         {
+            
+            
             switch (fuente.getName()) 
             {
+                //actionlistener de los Botones_Matriz
+                case "Matriz":
+                    ((JButton)fuente).setBackground(Color.DARK_GRAY);
+                    ((JButton)fuente).setForeground(Color.WHITE);
+                    break;
+                
                 case "Crear":
                     generarMatriz();
                     break;
@@ -114,7 +124,7 @@ public class Controlador implements ActionListener{
 		
 
             //generamos la matriz con los datos introducidos
-            vista.getPanel_matriz_botones().generarMatrizDeBotones(filas, columnas);
+            vista.getPanel_matriz_botones().generarMatrizDeBotones(filas, columnas, this);
         
     }
     
