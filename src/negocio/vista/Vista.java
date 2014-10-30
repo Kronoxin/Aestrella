@@ -1,14 +1,12 @@
 package negocio.vista;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
+import negocio.controlador.Controlador;
 
 
 
-public class Vista extends JFrame implements ActionListener{
+public class Vista extends JFrame{
 	
 	
 	private Container contenedorPrincipal;
@@ -32,27 +30,8 @@ public class Vista extends JFrame implements ActionListener{
 		contenedorPrincipal.add(panel_menu, BorderLayout.NORTH);
 		contenedorPrincipal.add(panel_matriz_botones, BorderLayout.CENTER);
 		
-
-                panel_menu.entrada_datos.getBoton_crear().addActionListener(this);
-		
-		
 	}
-	
-	public void actionPerformed( ActionEvent evt ) {
-            
-            //Se obtiene la cantidad de filas y columnas a crear
-            String f = panel_menu.entrada_datos.getTxt_filas().getText();
-            String c = panel_menu.entrada_datos.getTxt_columnas().getText();
-        
-            //Parseamos el String a Int
-            int filas = Integer.parseInt(f);
-            int columnas = Integer.parseInt(c);
-		
 
-            //generamos la matriz con los datos introducidos
-            panel_matriz_botones.generarMatrizDeBotones(filas, columnas);
-	}
-	
 	
 
 	public static void main(String[] args) {
@@ -61,8 +40,24 @@ public class Vista extends JFrame implements ActionListener{
             } catch (Exception ex) {
 			ex.printStackTrace();
             }
-		
-		Vista vista = new Vista();
+            Controlador c = new Controlador();
+	
         }
 
+        
+    public Panel_Menu getPanel_menu() {
+        return panel_menu;
+    }
+
+    public void setPanel_menu(Panel_Menu panel_menu) {
+        this.panel_menu = panel_menu;
+    }
+
+    public Panel_Matriz getPanel_matriz_botones() {
+        return panel_matriz_botones;
+    }
+
+    public void setPanel_matriz_botones(Panel_Matriz panel_matriz_botones) {
+        this.panel_matriz_botones = panel_matriz_botones;
+    }
 }

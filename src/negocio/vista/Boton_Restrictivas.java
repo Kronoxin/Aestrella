@@ -14,6 +14,7 @@ import javax.swing.JButton;
  */
 public class Boton_Restrictivas extends JButton{
      public Boton_Restrictivas(){
+        setName("Restrictivas");
         setText("Restrictivas");
         setBackground(Color.GRAY);
         setForeground(Color.BLACK);

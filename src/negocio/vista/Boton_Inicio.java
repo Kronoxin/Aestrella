@@ -16,6 +16,7 @@ import javax.swing.JButton;
 public class Boton_Inicio extends JButton{
     
     public Boton_Inicio(){
+        setName("Inicio");
         setText("Inicio");
         setBackground(Color.YELLOW);
         setForeground(Color.BLACK);

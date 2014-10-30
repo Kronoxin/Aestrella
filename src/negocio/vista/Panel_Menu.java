@@ -55,6 +55,14 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
     public void update(Observable o, Object arg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public ToolBar_Entrada getEntrada_datos() {
+        return entrada_datos;
+    }
+
+    public void setEntrada_datos(ToolBar_Entrada entrada_datos) {
+        this.entrada_datos = entrada_datos;
+    }
     
     
     

@@ -25,10 +25,11 @@ public class ToolBar_Entrada extends JToolBar{
     
      public ToolBar_Entrada(){
          
+         boton_crear.setName("Crear");
+         
         txt_filas.setPreferredSize(new Dimension(50, 25));
 	txt_columnas.setPreferredSize(new Dimension(50, 25));
-//		boton_crear.addActionListener(this);
-//		boton_reset.addActionListener(this);
+
 	this.add(label_filas);
 	this.add(txt_filas);
 	this.add(label_columnas);

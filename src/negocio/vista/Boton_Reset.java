@@ -14,6 +14,7 @@ import javax.swing.JButton;
  */
 public class Boton_Reset extends JButton{
      public Boton_Reset(){
+        setName("Reiniciar");
         setText("Reset");
         setBackground(Color.WHITE);
         setForeground(Color.RED);

@@ -16,6 +16,7 @@ import javax.swing.JButton;
 public class Boton_Meta extends JButton{
     
      public Boton_Meta(){
+        setName("Meta");
         setText("Meta");
         setBackground(Color.GREEN);
         setForeground(Color.BLACK);

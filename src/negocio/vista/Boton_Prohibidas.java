@@ -17,6 +17,7 @@ import javax.swing.JButton;
 public class Boton_Prohibidas extends JButton{
     
      public Boton_Prohibidas(){
+        setName("Prohibidas");
         setText("Prohibidas");
         setBackground(Color.BLACK);
         setForeground(Color.WHITE);

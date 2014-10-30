@@ -17,11 +17,12 @@ public class Boton_Empezar extends JButton{
     Font fuente = new Font("Verdana", Font.BOLD,14);
     
         public Boton_Empezar(){
-        setText("GO!");
-        setFont(fuente);
+            setName("Empezar");
+            setText("GO!");
+            setFont(fuente);
         
-        setBackground(Color.BLACK);
-        setForeground(Color.RED);
+            setBackground(Color.BLACK);
+            setForeground(Color.RED);
     
     }
 
