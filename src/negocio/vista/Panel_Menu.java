@@ -48,6 +48,7 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
        boton_restrictivas.addActionListener((ActionListener)controlador);   //del boton_restrictivas
        boton_reset.addActionListener((ActionListener)controlador);          //actionlistener de boton_reset
        boton_empezar.addActionListener((ActionListener)controlador);        //actionlistener de boton_empezar
+       entrada_datos.getBoton_crear().addActionListener((ActionListener)controlador);   //actionlistener boton_crear
     }
 
     @Override
