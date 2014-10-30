@@ -29,15 +29,10 @@ public class Panel_Matriz extends JPanel{
 		this.setLayout(new GridLayout(filas,columnas));
                 
               //Recorrido que debe hacer el for para invertir la matriz de la forma que queremos
-              // NO FUNCIONA
                 
-            /*    for(int x=filas; x>=0; x--){ 
+                for(int x=filas-1; x>=0; x--){ 
                     for(int y=0; y<columnas; y++){
-                */       
-		
-                for(int x=0; x<filas; x++){ 
-                    for(int y=0; y<columnas; y++){
-
+                      
                     
                         //Se crea el boton y se agrega a las celda de la matriz
                         matriz[x][y] = new Boton_Matriz();
