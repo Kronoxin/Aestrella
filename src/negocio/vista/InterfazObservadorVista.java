@@ -5,23 +5,15 @@
  */
 package negocio.vista;
 
-import java.awt.Color;
-import javax.swing.JButton;
+import java.util.EventListener;
+import java.util.Observer;
 
 /**
  *
  * @author Ruben
  */
-//comentario
-public class Boton_Inicio extends JButton{
+public interface InterfazObservadorVista extends Observer {
     
-    public Boton_Inicio(){
-        setText("Inicio");
-        setBackground(Color.YELLOW);
-        setForeground(Color.BLACK);
-    
-    }
-
-    
+     public void asignarControlador(EventListener controlador);
     
 }

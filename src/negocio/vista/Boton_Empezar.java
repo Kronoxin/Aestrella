@@ -24,5 +24,7 @@ public class Boton_Empezar extends JButton{
         setForeground(Color.RED);
     
     }
+
+
     
 }

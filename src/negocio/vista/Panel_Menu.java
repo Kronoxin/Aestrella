@@ -6,13 +6,16 @@
 package negocio.vista;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
+import java.util.Observable;
 import javax.swing.JPanel;
 
 /**
  *
  * @author Ruben
  */
-public class Panel_Menu extends JPanel{
+public class Panel_Menu extends JPanel implements InterfazObservadorVista{
     
         ToolBar_Entrada entrada_datos = new ToolBar_Entrada();
         Boton_Inicio boton_inicio = new Boton_Inicio();
@@ -36,6 +39,21 @@ public class Panel_Menu extends JPanel{
             this.add(boton_reset);
             this.add(boton_empezar);
         }
+
+    @Override
+    public void asignarControlador(EventListener controlador) {
+       boton_inicio.addActionListener((ActionListener)controlador); //agregamos el ActionListener al boton_inicio
+       boton_meta.addActionListener((ActionListener)controlador);   //ActionListener del boton_meta
+       boton_prohibidas.addActionListener((ActionListener)controlador);     //ActionListener del boton_prohibidas
+       boton_restrictivas.addActionListener((ActionListener)controlador);   //del boton_restrictivas
+       boton_reset.addActionListener((ActionListener)controlador);          //actionlistener de boton_reset
+       boton_empezar.addActionListener((ActionListener)controlador);        //actionlistener de boton_empezar
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
