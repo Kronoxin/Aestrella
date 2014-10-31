@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
 import javax.swing.JButton;
+
 import negocio.vista.Vista;
 
 /**
@@ -19,6 +20,9 @@ import negocio.vista.Vista;
  */
 public class Controlador implements ActionListener{
      Vista vista = new Vista();
+    JButton boton_seleccionado;
+    ActionEvent evento;
+
      
     public Controlador(){
         super();
@@ -78,7 +82,13 @@ public class Controlador implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+        evento = e;
+        
         tratarEventoGenerico(e);
+       
+        System.out.println(e.getSource().getClass());
+  
     }
     
     
@@ -92,6 +102,16 @@ public class Controlador implements ActionListener{
     
     public void marcarInicio(){
         System.out.println("He marcado Inicio");
+        System.out.println(evento.getSource().getClass());
+
+        
+        if(boton_seleccionado != null){
+            boton_seleccionado.setContentAreaFilled(true);
+        }
+         boton_seleccionado = ((JButton)evento.getSource());
+         boton_seleccionado.setContentAreaFilled(false);
+        
+        
         
         
     }
@@ -99,15 +119,33 @@ public class Controlador implements ActionListener{
     public void marcarMeta(){
         System.out.println("He marcado Meta");
         
+        if(boton_seleccionado != null){
+            boton_seleccionado.setContentAreaFilled(true);
+        }
+         boton_seleccionado = ((JButton)evento.getSource());
+         boton_seleccionado.setContentAreaFilled(false);
+       
     }
     
     public void marcarProhibidas(){
         System.out.println("He marcado Prohibidas");
         
+        if(boton_seleccionado != null){
+            boton_seleccionado.setContentAreaFilled(true);
+        }
+         boton_seleccionado = ((JButton)evento.getSource());
+         boton_seleccionado.setContentAreaFilled(false);
+        
     }
     
     public void marcarRestrictivas(){
         System.out.println("He marcado Restrictivas");
+        
+        if(boton_seleccionado != null){
+            boton_seleccionado.setContentAreaFilled(true);
+        }
+         boton_seleccionado = ((JButton)evento.getSource());
+         boton_seleccionado.setContentAreaFilled(false);
         
     }
     

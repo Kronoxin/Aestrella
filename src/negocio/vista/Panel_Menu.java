@@ -64,6 +64,56 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
     public void setEntrada_datos(ToolBar_Entrada entrada_datos) {
         this.entrada_datos = entrada_datos;
     }
+
+    public Boton_Inicio getBoton_inicio() {
+        return boton_inicio;
+    }
+
+    public void setBoton_inicio(Boton_Inicio boton_inicio) {
+        this.boton_inicio = boton_inicio;
+    }
+
+    public Boton_Meta getBoton_meta() {
+        return boton_meta;
+    }
+
+    public void setBoton_meta(Boton_Meta boton_meta) {
+        this.boton_meta = boton_meta;
+    }
+
+    public Boton_Prohibidas getBoton_prohibidas() {
+        return boton_prohibidas;
+    }
+
+    public void setBoton_prohibidas(Boton_Prohibidas boton_prohibidas) {
+        this.boton_prohibidas = boton_prohibidas;
+    }
+
+    public Boton_Restrictivas getBoton_restrictivas() {
+        return boton_restrictivas;
+    }
+
+    public void setBoton_restrictivas(Boton_Restrictivas boton_restrictivas) {
+        this.boton_restrictivas = boton_restrictivas;
+    }
+
+    public Boton_Reset getBoton_reset() {
+        return boton_reset;
+    }
+
+    public void setBoton_reset(Boton_Reset boton_reset) {
+        this.boton_reset = boton_reset;
+    }
+
+    public Boton_Empezar getBoton_empezar() {
+        return boton_empezar;
+    }
+
+    public void setBoton_empezar(Boton_Empezar boton_empezar) {
+        this.boton_empezar = boton_empezar;
+    }
+    
+    
     
     
     
