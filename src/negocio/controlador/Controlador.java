@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
 import javax.swing.JButton;
+import negocio.vista.Boton_Matriz;
 
 import negocio.vista.Vista;
 
@@ -22,6 +23,7 @@ public class Controlador implements ActionListener{
      Vista vista = new Vista();
     JButton boton_seleccionado;
     ActionEvent evento;
+    Boton_Matriz boton_matriz_seleccionado;
 
      
     public Controlador(){
@@ -38,8 +40,11 @@ public class Controlador implements ActionListener{
             {
                 //actionlistener de los Botones_Matriz
                 case "Matriz":
-                    ((JButton)fuente).setBackground(Color.DARK_GRAY);
-                    ((JButton)fuente).setForeground(Color.WHITE);
+                    
+                    capturarBotonMatriz();
+
+                    verloquetengoquehacer();
+
                     break;
                 
                 case "Crear":
@@ -99,17 +104,19 @@ public class Controlador implements ActionListener{
         hacerCambiosEnModelo(fuente);
     }
     
+    public void capturarBotonMatriz (){
+        
+        boton_matriz_seleccionado = ((Boton_Matriz)evento.getSource());
+        
+    }
+        
     
     public void marcarInicio(){
         System.out.println("He marcado Inicio");
         System.out.println(evento.getSource().getClass());
 
         
-        if(boton_seleccionado != null){
-            boton_seleccionado.setContentAreaFilled(true);
-        }
-         boton_seleccionado = ((JButton)evento.getSource());
-         boton_seleccionado.setContentAreaFilled(false);
+        activar_desactivar_boton();
         
         
         
@@ -119,33 +126,21 @@ public class Controlador implements ActionListener{
     public void marcarMeta(){
         System.out.println("He marcado Meta");
         
-        if(boton_seleccionado != null){
-            boton_seleccionado.setContentAreaFilled(true);
-        }
-         boton_seleccionado = ((JButton)evento.getSource());
-         boton_seleccionado.setContentAreaFilled(false);
+        activar_desactivar_boton();
        
     }
     
     public void marcarProhibidas(){
         System.out.println("He marcado Prohibidas");
         
-        if(boton_seleccionado != null){
-            boton_seleccionado.setContentAreaFilled(true);
-        }
-         boton_seleccionado = ((JButton)evento.getSource());
-         boton_seleccionado.setContentAreaFilled(false);
+        activar_desactivar_boton();
         
     }
     
     public void marcarRestrictivas(){
         System.out.println("He marcado Restrictivas");
         
-        if(boton_seleccionado != null){
-            boton_seleccionado.setContentAreaFilled(true);
-        }
-         boton_seleccionado = ((JButton)evento.getSource());
-         boton_seleccionado.setContentAreaFilled(false);
+        activar_desactivar_boton();
         
     }
     
@@ -173,6 +168,44 @@ public class Controlador implements ActionListener{
     
     public void marcarReset(){
         System.out.println("He marcado Reset");
+    }
+    
+    
+    //metodo para acivar_desactivar los botones del panel_menu
+    public void activar_desactivar_boton (){
+         if(boton_seleccionado != null){
+            boton_seleccionado.setContentAreaFilled(true);
+        }
+         boton_seleccionado = ((JButton)evento.getSource());
+         boton_seleccionado.setContentAreaFilled(false);
+    }
+    
+    //Aqui es donde cojo cada boton_matriz que utilizo
+    public void verloquetengoquehacer(){
+        
+        switch (boton_seleccionado.getText()) 
+            {
+                //actionlistener de los Botones_Matriz
+                case "Inicio":
+                    boton_matriz_seleccionado.setBackground(Color.YELLOW);
+                    break;
+                
+                case "Meta":
+                    boton_matriz_seleccionado.setBackground(Color.RED);
+                    break;
+                    
+                case "Prohibidas":
+                    boton_matriz_seleccionado.setBackground(Color.BLACK);
+                    boton_matriz_seleccionado.setForeground(Color.WHITE);
+                    break;
+   
+                case "Restrictivas":
+                    boton_matriz_seleccionado.setBackground(Color.GRAY);
+                    boton_matriz_seleccionado.setForeground(Color.BLACK);
+                    break;
+        
+        }
+        
     }
     
 }
