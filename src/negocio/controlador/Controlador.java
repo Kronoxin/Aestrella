@@ -113,14 +113,9 @@ public class Controlador implements ActionListener{
     
     public void marcarInicio(){
         System.out.println("He marcado Inicio");
-        System.out.println(evento.getSource().getClass());
 
-        
         activar_desactivar_boton();
-        
-        
-        
-        
+
     }
     
     public void marcarMeta(){
@@ -168,44 +163,51 @@ public class Controlador implements ActionListener{
     
     public void marcarReset(){
         System.out.println("He marcado Reset");
+        generarMatriz();
     }
     
     
-    //metodo para acivar_desactivar los botones del panel_menu
+    //metodo para acivar_desactivar los botones del panel_menu una vez se hayan pinchado
     public void activar_desactivar_boton (){
          if(boton_seleccionado != null){
-            boton_seleccionado.setContentAreaFilled(true);
+            boton_seleccionado.setEnabled(true);
         }
          boton_seleccionado = ((JButton)evento.getSource());
-         boton_seleccionado.setContentAreaFilled(false);
+         boton_seleccionado.setEnabled(false);
     }
     
     //Aqui es donde cojo cada boton_matriz que utilizo
     public void verloquetengoquehacer(){
         
-        switch (boton_seleccionado.getText()) 
-            {
-                //actionlistener de los Botones_Matriz
-                case "Inicio":
-                    boton_matriz_seleccionado.setBackground(Color.YELLOW);
-                    break;
-                
-                case "Meta":
-                    boton_matriz_seleccionado.setBackground(Color.RED);
-                    break;
-                    
-                case "Prohibidas":
-                    boton_matriz_seleccionado.setBackground(Color.BLACK);
-                    boton_matriz_seleccionado.setForeground(Color.WHITE);
-                    break;
-   
-                case "Restrictivas":
-                    boton_matriz_seleccionado.setBackground(Color.GRAY);
-                    boton_matriz_seleccionado.setForeground(Color.BLACK);
-                    break;
+        if(boton_seleccionado == null){
+            System.out.println("No has seleccionado ninguna opción del menu");
+        }
+        else{
+        
+            switch (boton_seleccionado.getText()) 
+                {
+                    //actionlistener de los Botones_Matriz
+                    case "Inicio":
+                        boton_matriz_seleccionado.setBackground(Color.YELLOW);
+                        break;
+
+                    case "Meta":
+                        boton_matriz_seleccionado.setBackground(Color.GREEN);
+                        break;
+
+                    case "Prohibidas":
+                        boton_matriz_seleccionado.setBackground(Color.BLACK);
+                        boton_matriz_seleccionado.setForeground(Color.WHITE);
+                        break;
+
+                    case "Restrictivas":
+                        boton_matriz_seleccionado.setBackground(Color.GRAY);
+                        boton_matriz_seleccionado.setForeground(Color.BLACK);
+                        break;
+
+            }
         
         }
-        
     }
     
 }
