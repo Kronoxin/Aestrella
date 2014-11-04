@@ -24,6 +24,9 @@ public class Controlador implements ActionListener{
     JButton boton_seleccionado;
     ActionEvent evento;
     Boton_Matriz boton_matriz_seleccionado;
+    
+    boolean boton_inicio_seleccionado=false;
+    boolean boton_meta_seleccionado = false;
 
      
     public Controlador(){
@@ -53,6 +56,7 @@ public class Controlador implements ActionListener{
                     
                 case "Inicio":
                     marcarInicio();
+                    
                     break;
                 
                 case "Meta":
@@ -113,7 +117,6 @@ public class Controlador implements ActionListener{
     
     public void marcarInicio(){
         System.out.println("He marcado Inicio");
-
         activar_desactivar_boton();
 
     }
@@ -164,6 +167,8 @@ public class Controlador implements ActionListener{
     public void marcarReset(){
         System.out.println("He marcado Reset");
         generarMatriz();
+        boton_inicio_seleccionado = false;
+        boton_meta_seleccionado = false;
     }
     
     
@@ -188,11 +193,20 @@ public class Controlador implements ActionListener{
                 {
                     //actionlistener de los Botones_Matriz
                     case "Inicio":
-                        boton_matriz_seleccionado.setBackground(Color.YELLOW);
+                        if(boton_inicio_seleccionado == false){
+                            boton_matriz_seleccionado.setBackground(Color.YELLOW);
+                            boton_inicio_seleccionado = true;
+                        }
+                        
+           
                         break;
 
                     case "Meta":
-                        boton_matriz_seleccionado.setBackground(Color.GREEN);
+                        if(boton_meta_seleccionado == false){
+                            boton_matriz_seleccionado.setBackground(Color.GREEN);
+                            boton_meta_seleccionado = true;
+                        }
+                        
                         break;
 
                     case "Prohibidas":

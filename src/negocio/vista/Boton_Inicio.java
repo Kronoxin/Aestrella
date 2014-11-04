@@ -14,6 +14,7 @@ import javax.swing.JButton;
  */
 //comentario
 public class Boton_Inicio extends JButton{
+
     
     public Boton_Inicio(){
         setName("Inicio");
