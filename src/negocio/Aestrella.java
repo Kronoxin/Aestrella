@@ -81,18 +81,32 @@ public class Aestrella
 	
         public Nodo seleccionarNodoOptimo(Nodo nodoOrigen)
         {
-            int fmin = 0;
+            double fmin = 0;
             Nodo nodoOptimo = null;
+            ArrayList<Estado> listaHijos = new ArrayList<>();
+            listaHijos = tabla.getHijosDelNodo(nodoOrigen);
+
             
-            for (Estado estadoActual : tabla.getTabla())
+            if (listaHijos.size() > 0)
             {
+                fmin = listaHijos.get(0).getDistanciaTotal();
+                for (Estado estadoActual : tabla.getHijosDelNodo(nodoOrigen))
+                {
+                    if (estadoActual.isEstaAbierto() && estadoActual.getDistanciaTotal() < fmin)
+                    {
+                        nodoOptimo = estadoActual.getNodoActual();
+                        fmin = estadoActual.getDistanciaTotal();
+                    }
+                
                 // Si el nodo actual tiene como padre al nodo recibido y la distancia del nodo actual es
                 //if (estadoActual.getNodoPadre().equals(nodoOrigen) && estadoActual.getDistanciaTotal() )
                 //{
                     
                 //}
+                 }
             }
             return nodoOptimo;
+            
         }
         
         public void recorrer()

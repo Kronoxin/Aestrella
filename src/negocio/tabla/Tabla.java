@@ -21,6 +21,19 @@ public class Tabla
         tabla = new ArrayList<>();
     }
     
+    public ArrayList<Estado> getHijosDelNodo(Nodo nodoPadre) 
+    {
+        ArrayList<Estado> hijos = new ArrayList<>();
+        
+        for (Estado estado : tabla)
+        {
+            if (estado.getNodoPadre().equals(nodoPadre))
+                hijos.add(estado);
+        }
+        
+        return hijos;
+    }
+    
     public Estado getEstadoDelNodo(Nodo nodoABuscar)
     {
         Estado estadoDevolver = null;
