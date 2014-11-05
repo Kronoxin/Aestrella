@@ -17,6 +17,12 @@ public class Nodo
 		this.x = x;
 		this.y = y;
 	}
+        public Nodo(Nodo nodo)
+        {
+            this.x = nodo.x;
+            this.y = nodo.y;
+        }
+        
 	public int getX() {
 		return x;
 	}

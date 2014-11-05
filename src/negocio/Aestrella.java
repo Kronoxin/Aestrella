@@ -53,6 +53,7 @@ public class Aestrella
 	
 	public void generarPosibles(Nodo nodo)
 	{
+            Nodo nodoNuevo;
                 // Recorro las posiciones adyacentes al nodo.
 		for (int fila=Math.max(0, nodo.getX()-1);fila < Math.min(sizeX,nodo.getX()+2);fila++)
 		{
@@ -60,19 +61,25 @@ public class Aestrella
 			{
                             if ((nodo.getX() != fila || nodo.getY() != columna )&& campo[fila][columna] >=0)//&& campo[fila][columna] >=0
                             {
-                                double disOr,disDest;
-                                // Calculamos la distancia desde el nodo actual al padre.
-				disOr = distanciaEuclidea(nodo,new Nodo(fila,columna));
-                                // Le sumamos la distancia ya recorrida por el padre para tener el recorrido total.
-                                disOr += this.tabla.getEstadoDelNodo(nodo).getDistanciaOrigen();
-                                // Calculamos la distancia entre el nodo actual y el nodo final.
-				disDest = distanciaEuclidea(new Nodo(fila,columna),meta);
+                                nodoNuevo = new Nodo(fila,columna);
                                 
-                                
-                                // Instanciamos un nuevo estado abierto, con el nodo actual, el nodo padre y las distancias.
-				Estado estado = new Estado(true,new Nodo(fila,columna),new Nodo(nodo.getX(),nodo.getY()),disOr,disDest,disOr+disDest);
-				// Lo agregamos a la tabla.
-                                tabla.getTabla().add(estado);
+                                // Si no existe ya en la tabla el nodo Nuevo, se inserta.
+                                if (tabla.getEstadoDelNodo(nodoNuevo) == null)
+                                {
+                                    double disOr,disDest;
+                                    // Calculamos la distancia desde el nodo actual al padre.
+                                    disOr = distanciaEuclidea(nodo,nodoNuevo);
+                                    // Le sumamos la distancia ya recorrida por el padre para tener el recorrido total.
+                                    disOr += this.tabla.getEstadoDelNodo(nodo).getDistanciaOrigen();
+                                    // Calculamos la distancia entre el nodo actual y el nodo final.
+                                    disDest = distanciaEuclidea(nodoNuevo,meta);
+
+
+                                    // Instanciamos un nuevo estado abierto, con el nodo actual, el nodo padre y las distancias.
+                                    Estado estado = new Estado(true,new Nodo(fila,columna),new Nodo(nodo.getX(),nodo.getY()),disOr,disDest,disOr+disDest);
+                                    // Lo agregamos a la tabla.
+                                    tabla.getTabla().add(estado);
+                                }
                             }
 			}
 		}
@@ -108,8 +115,19 @@ public class Aestrella
             return nodoOptimo;
             
         }
+        public ArrayList<Nodo> invertirLista(ArrayList<Nodo> lista)
+        {
+            Nodo temp;
+            for (int i = 0; i < lista.size()/2; i++)
+            {
+                temp = lista.get(i);
+                lista.set(i, lista.get(lista.size() - i -1));
+                lista.set(lista.size() - i -1, temp);
+            }
+            return lista;
+        }
         
-        public void recorrer()
+        public ArrayList<Nodo> recorrer()
 	{
 		Estado estado = new Estado(false,inicio,inicio,0,distanciaEuclidea(inicio,meta),distanciaEuclidea(inicio,meta));
                 
@@ -118,17 +136,35 @@ public class Aestrella
                 numeroCasillasCerradas++;
                 
                 Nodo nodoActual = inicio;
+                Nodo nodoTemp;
+                ArrayList<Nodo> caminoElegido = null;
+                
+                generarPosibles(nodoActual);
                 
                 while((numeroCasillasCerradas != sizeX*sizeY) && !nodoActual.equals(meta))
+                {  
+                    
+                    nodoTemp = seleccionarNodoOptimo(nodoActual);
+                    
+                    // No se puede escoger ningun hijo de este nodo
+                    if (nodoTemp == null)
+                    {// Cogemos el nodo padre
+                        nodoActual = tabla.getEstadoDelNodo(nodoActual).getNodoPadre();
+                    }
+                    else
+                    {
+                        nodoActual = nodoTemp;
+                        tabla.getEstadoDelNodo(nodoActual).setEstaAbierto(false);
+                        numeroCasillasCerradas++;
+                        generarPosibles(nodoActual);
+                    }
+                }
+                if (nodoActual.equals(meta))
                 {
-                    generarPosibles(nodoActual);
-                    
-                    
-                    
-                    
+                    caminoElegido = tabla.getRecorridoDelNodo(nodoActual);
                 }
                     
-		
+		return caminoElegido;
 		
 	}
         // PRUEBA GITHUB
@@ -144,7 +180,14 @@ public class Aestrella
                 
 		Aestrella prueba = new Aestrella(new Nodo(3,4),new Nodo(6,6),casillasProhibidas);
 		
-		prueba.generarPosibles(new Nodo(3,4));
+                ArrayList<Nodo> camino = prueba.recorrer();
+		if (camino != null && camino.size() > 0)
+                {
+                    camino = prueba.invertirLista(camino);
+                    
+                    for (Nodo nodo : camino)
+                        System.out.println("Recorro el nodo " + nodo.getX() + "," + nodo.getY());
+                }
 		
 		System.out.println();
 	}

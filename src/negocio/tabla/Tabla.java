@@ -27,11 +27,30 @@ public class Tabla
         
         for (Estado estado : tabla)
         {
-            if (estado.getNodoPadre().equals(nodoPadre))
+            if (estado.getNodoPadre().equals(nodoPadre) && !estado.getNodoActual().equals(nodoPadre))
                 hijos.add(estado);
         }
         
         return hijos;
+    }
+    
+    public ArrayList<Nodo> getRecorridoDelNodo(Nodo nodo) 
+    {
+        Nodo nodoActual = nodo;
+        ArrayList<Nodo> recorrido = new ArrayList<>();
+        Estado estadoNodoActual = getEstadoDelNodo(nodoActual);
+        boolean continuar = true;
+        
+        while(!estadoNodoActual.getNodoActual().equals(estadoNodoActual.getNodoPadre()))
+        {
+            recorrido.add(nodoActual);
+            nodoActual = estadoNodoActual.getNodoPadre();
+            estadoNodoActual = getEstadoDelNodo(nodoActual);
+        }
+        if(estadoNodoActual.getNodoActual().equals(estadoNodoActual.getNodoPadre()))
+            recorrido.add(nodoActual);
+        
+        return recorrido;
     }
     
     public Estado getEstadoDelNodo(Nodo nodoABuscar)
