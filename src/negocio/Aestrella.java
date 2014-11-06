@@ -16,8 +16,8 @@ public class Aestrella
 	int campo[][];
         int numeroCasillasCerradas;
 	
-	private final int sizeX = 10;
-	private final int sizeY = 10;
+	private int sizeX;
+	private int sizeY;
 	
 	ArrayList<Nodo> casillasProhibidas;
 	
@@ -26,8 +26,11 @@ public class Aestrella
 	Nodo inicio;
 	Nodo meta;
 	
-	public Aestrella(Nodo inicio, Nodo meta, ArrayList<Nodo> casillasProhibidas)
+	public Aestrella(Nodo inicio, Nodo meta, ArrayList<Nodo> casillasProhibidas,int sizeX,int sizeY)
 	{
+                this.sizeX = sizeX;
+                this.sizeY = sizeY;
+                
 		campo = new int[sizeX][sizeY];
 		
                 this.casillasProhibidas = casillasProhibidas;
@@ -168,31 +171,4 @@ public class Aestrella
 		return caminoElegido;
 		
 	}
-        // PRUEBA GITHUB
-        // Prueba GitHub 2
-	
-	public static void main(String args[])
-	{
-                ArrayList<Nodo> casillasProhibidas = new ArrayList<>();
-                casillasProhibidas.add(new Nodo(4,4));
-                casillasProhibidas.add(new Nodo(4,5));
-                casillasProhibidas.add(new Nodo(4,6));
-                casillasProhibidas.add(new Nodo(4,7));
-                
-		Aestrella prueba = new Aestrella(new Nodo(3,4),new Nodo(6,6),casillasProhibidas);
-		
-                ArrayList<Nodo> camino = prueba.recorrer();
-		if (camino != null && camino.size() > 0)
-                {
-                    camino = prueba.invertirLista(camino);
-                    
-                    for (Nodo nodo : camino)
-                        System.out.println("Recorro el nodo " + nodo.getX() + "," + nodo.getY());
-                }
-		
-		System.out.println();
-	}
-	
-	
-	
 }

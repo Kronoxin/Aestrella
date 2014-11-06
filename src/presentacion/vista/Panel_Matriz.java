@@ -17,7 +17,8 @@ import javax.swing.JPanel;
  */
 public class Panel_Matriz extends JPanel implements InterfazObservadorVista{
     
-
+    private Boton_Matriz[][] matriz;
+    
     public Panel_Matriz(){
         super();
     }
@@ -27,7 +28,7 @@ public class Panel_Matriz extends JPanel implements InterfazObservadorVista{
         this.removeAll();
         
             if(filas >0 && columnas >0){
-		Boton_Matriz[][] matriz = new Boton_Matriz[filas][columnas];
+		matriz = new Boton_Matriz[filas][columnas];
 		
 		this.setLayout(new GridLayout(filas,columnas));
                 
@@ -55,6 +56,12 @@ public class Panel_Matriz extends JPanel implements InterfazObservadorVista{
                 System.out.println("Filas y columnas deben ser > 0");
             }
     }
+
+    public Boton_Matriz[][] getMatriz() {
+        return matriz;
+    }
+    
+    
 
     @Override
     public void asignarControlador(EventListener controlador) {

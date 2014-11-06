@@ -33,6 +33,7 @@ public class Controlador implements ActionListener{
     private ArrayList<Nodo> listaNodosProhibidos;
     private Nodo inicio;
     private Nodo meta;
+    private int x,y;
 
      
     public Controlador(){
@@ -160,21 +161,31 @@ public class Controlador implements ActionListener{
             int filas = Integer.parseInt(f);
             int columnas = Integer.parseInt(c);
 		
-
+            this.x = filas;
+            this.y = columnas;
             //generamos la matriz con los datos introducidos
             vista.getPanel_matriz_botones().generarMatrizDeBotones(filas, columnas, this);
+            
+            boton_inicio_seleccionado = false;
+        boton_meta_seleccionado = false;
+        this.inicio = null;
+        this.meta = null;
+        this.listaNodosProhibidos = new ArrayList<>();
         
     }
     
     public void empezar(){
         System.out.println("He marcado Empezar");
-        Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos);
+        Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos,this.x,this.y);
         ArrayList<Nodo> recorrido = algoritmo.recorrer();
         
         if (recorrido != null && recorrido.size() > 0)
                 {
-                    for (Nodo nodo : recorrido)
-                        System.out.println("Recorro el nodo " + nodo.getX() + "," + nodo.getY());
+                    for (Nodo nodo : recorrido){
+
+                        if(!(nodo.equals(inicio) || nodo.equals(meta)))
+                            vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(Color.red);
+                    }
                 }
         
     }
@@ -182,11 +193,7 @@ public class Controlador implements ActionListener{
     public void marcarReset(){
         System.out.println("He marcado Reset");
         generarMatriz();
-        boton_inicio_seleccionado = false;
-        boton_meta_seleccionado = false;
-        this.inicio = null;
-        this.meta = null;
-        this.listaNodosProhibidos = new ArrayList<>();
+        
     }
     
     
