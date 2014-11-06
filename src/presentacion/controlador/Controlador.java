@@ -3,17 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package negocio.controlador;
+package presentacion.controlador;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.EventObject;
 import javax.swing.JButton;
-import negocio.vista.Boton_Matriz;
-
-import negocio.vista.Vista;
+import negocio.Aestrella;
+import negocio.estado.Nodo;
+import presentacion.vista.Boton_Matriz;
+import presentacion.vista.Vista;
 
 /**
  *
@@ -27,15 +29,20 @@ public class Controlador implements ActionListener{
     
     boolean boton_inicio_seleccionado=false;
     boolean boton_meta_seleccionado = false;
+    
+    private ArrayList<Nodo> listaNodosProhibidos;
+    private Nodo inicio;
+    private Nodo meta;
 
      
     public Controlador(){
         super();
+        listaNodosProhibidos = new ArrayList<>();
         vista.getPanel_menu().asignarControlador(this);
     }
     
     
-            public void hacerCambiosEnModelo(Component fuente)
+        public void hacerCambiosEnModelo(Component fuente)
         {
             
             
@@ -161,6 +168,14 @@ public class Controlador implements ActionListener{
     
     public void empezar(){
         System.out.println("He marcado Empezar");
+        Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos);
+        ArrayList<Nodo> recorrido = algoritmo.recorrer();
+        
+        if (recorrido != null && recorrido.size() > 0)
+                {
+                    for (Nodo nodo : recorrido)
+                        System.out.println("Recorro el nodo " + nodo.getX() + "," + nodo.getY());
+                }
         
     }
     
@@ -169,6 +184,9 @@ public class Controlador implements ActionListener{
         generarMatriz();
         boton_inicio_seleccionado = false;
         boton_meta_seleccionado = false;
+        this.inicio = null;
+        this.meta = null;
+        this.listaNodosProhibidos = new ArrayList<>();
     }
     
     
@@ -196,6 +214,7 @@ public class Controlador implements ActionListener{
                         if(boton_inicio_seleccionado == false){
                             boton_matriz_seleccionado.setBackground(Color.YELLOW);
                             boton_inicio_seleccionado = true;
+                            this.inicio = new Nodo(boton_matriz_seleccionado.getXpos(), boton_matriz_seleccionado.getYpos());
                         }
                         
            
@@ -205,6 +224,7 @@ public class Controlador implements ActionListener{
                         if(boton_meta_seleccionado == false){
                             boton_matriz_seleccionado.setBackground(Color.GREEN);
                             boton_meta_seleccionado = true;
+                            this.meta = new Nodo(boton_matriz_seleccionado.getXpos(), boton_matriz_seleccionado.getYpos());
                         }
                         
                         break;
@@ -212,9 +232,11 @@ public class Controlador implements ActionListener{
                     case "Prohibidas":
                         boton_matriz_seleccionado.setBackground(Color.BLACK);
                         boton_matriz_seleccionado.setForeground(Color.WHITE);
+                        this.listaNodosProhibidos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
                         break;
 
                     case "Restrictivas":
+                        
                         boton_matriz_seleccionado.setBackground(Color.GRAY);
                         boton_matriz_seleccionado.setForeground(Color.BLACK);
                         break;

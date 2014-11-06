@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package negocio.vista;
+package presentacion.vista;
 
 import java.awt.Color;
 import java.awt.Font;

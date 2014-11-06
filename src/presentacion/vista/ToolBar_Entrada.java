@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package negocio.vista;
+package presentacion.vista;
 
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -28,7 +28,10 @@ public class ToolBar_Entrada extends JToolBar{
          boton_crear.setName("Crear");
          
         txt_filas.setPreferredSize(new Dimension(50, 25));
+        txt_filas.setText("10");
 	txt_columnas.setPreferredSize(new Dimension(50, 25));
+        txt_columnas.setText("10");
+        
 
 	this.add(label_filas);
 	this.add(txt_filas);

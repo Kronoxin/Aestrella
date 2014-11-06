@@ -1,8 +1,8 @@
-package negocio.vista;
+package presentacion.vista;
 
 import java.awt.*;
 import javax.swing.*;
-import negocio.controlador.Controlador;
+import presentacion.controlador.Controlador;
 
 
 

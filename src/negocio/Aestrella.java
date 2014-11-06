@@ -162,6 +162,7 @@ public class Aestrella
                 if (nodoActual.equals(meta))
                 {
                     caminoElegido = tabla.getRecorridoDelNodo(nodoActual);
+                    caminoElegido = invertirLista(caminoElegido);
                 }
                     
 		return caminoElegido;

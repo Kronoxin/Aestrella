@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package negocio.vista;
+package presentacion.vista;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -12,16 +12,18 @@ import javax.swing.JButton;
  *
  * @author Ruben
  */
+//comentario
+public class Boton_Inicio extends JButton{
 
-//otro coment
-public class Boton_Prohibidas extends JButton{
     
-     public Boton_Prohibidas(){
-        setName("Prohibidas");
-        setText("Prohibidas");
-        setBackground(Color.BLACK);
-        setForeground(Color.WHITE);
+    public Boton_Inicio(){
+        setName("Inicio");
+        setText("Inicio");
+        setBackground(Color.YELLOW);
+        setForeground(Color.BLACK);
     
     }
+
+    
     
 }
