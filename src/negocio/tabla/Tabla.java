@@ -64,6 +64,16 @@ public class Tabla
         }
         return estadoDevolver;
     }
+    
+    public boolean todosEstadosCerrados()
+    {
+        int nEstadosCerrados = 0;
+        for (Estado estado : this.tabla)
+            if (!estado.isEstaAbierto())
+                nEstadosCerrados++;
+        
+        return nEstadosCerrados == this.tabla.size();
+    }
 
     public ArrayList<Estado> getTabla() 
     {

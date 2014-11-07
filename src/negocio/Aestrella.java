@@ -158,7 +158,7 @@ public class Aestrella
                 
                 generarPosibles(nodoActual);
                 
-                while((numeroCasillasCerradas != sizeX*sizeY) && !nodoActual.equals(meta))
+                while(!tabla.todosEstadosCerrados() && !nodoActual.equals(meta))
                 {  
                     
                     nodoTemp = seleccionarNodoOptimo(nodoActual);
@@ -182,7 +182,7 @@ public class Aestrella
                     caminoElegido = invertirLista(caminoElegido);
                 }
                 
-                if(numeroCasillasCerradas == sizeX*sizeY)
+                if(tabla.todosEstadosCerrados())
                     System.out.println("NO ENCONTRE LA META");
 		return caminoElegido;
 		
