@@ -47,6 +47,8 @@ public class Aestrella
 		campo[meta.getX()][meta.getY()] = 2;
 		this.inicio = inicio;
 		this.meta = meta;
+                // Incrementamos una casilla cerrada para contabilizar la meta
+                numeroCasillasCerradas++;
 		
 	}
         public double distanciaEuclidea(Nodo a, Nodo b)
@@ -179,7 +181,9 @@ public class Aestrella
                     caminoElegido = tabla.getRecorridoDelNodo(nodoActual);
                     caminoElegido = invertirLista(caminoElegido);
                 }
-                    
+                
+                if(numeroCasillasCerradas == sizeX*sizeY)
+                    System.out.println("NO ENCONTRE LA META");
 		return caminoElegido;
 		
 	}
