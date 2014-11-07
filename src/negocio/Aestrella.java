@@ -88,6 +88,20 @@ public class Aestrella
 		}
 	}
 	
+        private Estado devolverEstadoAbierto(ArrayList<Estado> listaEstados)
+        {
+            Estado estado = null;
+            int i = 0;
+            
+            while(i != listaEstados.size() && estado == null)
+            {
+                if (listaEstados.get(i).isEstaAbierto())
+                    estado = listaEstados.get(i);
+                i++;
+            }
+            
+            return estado;
+        }
 	
         public Nodo seleccionarNodoOptimo(Nodo nodoOrigen)
         {
@@ -95,12 +109,13 @@ public class Aestrella
             Nodo nodoOptimo = null;
             ArrayList<Estado> listaHijos = new ArrayList<>();
             listaHijos = tabla.getHijosDelNodo(nodoOrigen);
-
             
-            if (listaHijos.size() > 0)
+            Estado primerEstado = devolverEstadoAbierto(listaHijos);
+            
+            if (primerEstado != null)
             {
-                fmin = listaHijos.get(0).getDistanciaTotal();
-                nodoOptimo = listaHijos.get(0).getNodoActual();
+                fmin = primerEstado.getDistanciaTotal();
+                nodoOptimo = primerEstado.getNodoActual();
                 
                 for (Estado estadoActual : tabla.getHijosDelNodo(nodoOrigen))
                 {
@@ -110,11 +125,6 @@ public class Aestrella
                         fmin = estadoActual.getDistanciaTotal();
                     }
                 
-                // Si el nodo actual tiene como padre al nodo recibido y la distancia del nodo actual es
-                //if (estadoActual.getNodoPadre().equals(nodoOrigen) && estadoActual.getDistanciaTotal() )
-                //{
-                    
-                //}
                  }
             }
             return nodoOptimo;
