@@ -24,6 +24,7 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
         Boton_Restrictivas boton_restrictivas = new Boton_Restrictivas();
         Boton_Reset boton_reset = new Boton_Reset();
         Boton_Empezar boton_empezar = new Boton_Empezar();
+        Boton_Borrar boton_borrar = new Boton_Borrar();
         
         public Panel_Menu(){
             
@@ -36,6 +37,7 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
             this.add(boton_meta);
             this.add(boton_prohibidas);
             this.add(boton_restrictivas);
+            this.add(boton_borrar);
             this.add(boton_reset);
             this.add(boton_empezar);
         }
@@ -49,7 +51,8 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
        boton_reset.addActionListener((ActionListener)controlador);          //actionlistener de boton_reset
        boton_empezar.addActionListener((ActionListener)controlador);        //actionlistener de boton_empezar
        entrada_datos.getBoton_crear().addActionListener((ActionListener)controlador);   //actionlistener boton_crear
-    
+       boton_borrar.addActionListener((ActionListener)controlador);
+       
     }
 
     @Override
@@ -112,6 +115,12 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
     public void setBoton_empezar(Boton_Empezar boton_empezar) {
         this.boton_empezar = boton_empezar;
     }
+
+    public void setBoton_borrar(Boton_Borrar boton_borrar) {
+        this.boton_borrar = boton_borrar;
+    }
+    
+     
     
     
     

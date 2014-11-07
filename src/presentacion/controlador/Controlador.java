@@ -85,7 +85,11 @@ public class Controlador implements ActionListener{
                      
                 case "Empezar":
                     empezar();
-                    break;     
+                    break;  
+                    
+                case "Borrar":
+                    borrar();
+                    break;
                      
                      
                 default:
@@ -190,6 +194,14 @@ public class Controlador implements ActionListener{
         
     }
     
+    public void borrar(){
+        
+        System.out.println("He marcado Borrar");
+        
+        activar_desactivar_boton();
+        
+    }
+    
     public void marcarReset(){
         System.out.println("He marcado Reset");
         generarMatriz();
@@ -246,6 +258,10 @@ public class Controlador implements ActionListener{
                         
                         boton_matriz_seleccionado.setBackground(Color.GRAY);
                         boton_matriz_seleccionado.setForeground(Color.BLACK);
+                        break;
+                        
+                    case "Borrar":
+                        
                         break;
 
             }
