@@ -100,6 +100,8 @@ public class Aestrella
             if (listaHijos.size() > 0)
             {
                 fmin = listaHijos.get(0).getDistanciaTotal();
+                nodoOptimo = listaHijos.get(0).getNodoActual();
+                
                 for (Estado estadoActual : tabla.getHijosDelNodo(nodoOrigen))
                 {
                     if (estadoActual.isEstaAbierto() && estadoActual.getDistanciaTotal() < fmin)
