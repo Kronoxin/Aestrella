@@ -261,6 +261,7 @@ public class Controlador implements ActionListener{
                         break;
                         
                     case "Borrar":
+
                         
                         break;
 
