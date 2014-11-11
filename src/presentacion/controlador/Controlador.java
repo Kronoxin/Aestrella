@@ -34,6 +34,7 @@ public class Controlador implements ActionListener{
     private Nodo inicio;
     private Nodo meta;
     private int x,y;
+    ArrayList<Nodo> recorrido;
 
      
     public Controlador(){
@@ -178,11 +179,19 @@ public class Controlador implements ActionListener{
         
     }
     
-    public void empezar(){
+    public void empezar()
+    {
+        borrarRecorrido();
         System.out.println("He marcado Empezar");
         Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos,this.x,this.y);
-        ArrayList<Nodo> recorrido = algoritmo.recorrer();
+        recorrido = algoritmo.recorrer();
+        pintarRecorrido();
         
+        
+    }
+    
+    private void pintarRecorrido()
+    {
         if (recorrido != null && recorrido.size() > 0)
                 {
                     for (Nodo nodo : recorrido){
@@ -191,7 +200,18 @@ public class Controlador implements ActionListener{
                             vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(Color.red);
                     }
                 }
-        
+    }
+    
+    private void borrarRecorrido()
+    {
+        if (recorrido != null && recorrido.size() > 0)
+                {
+                    for (Nodo nodo : recorrido){
+
+                        if(!(nodo.equals(inicio) || nodo.equals(meta)))
+                            vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(null);
+                    }
+                }
     }
     
     public void borrar(){
@@ -261,8 +281,28 @@ public class Controlador implements ActionListener{
                         break;
                         
                     case "Borrar":
-
-                        
+                        if (inicio.getX() == boton_matriz_seleccionado.getXpos() && inicio.getY() == boton_matriz_seleccionado.getYpos())
+                        {
+                            inicio = null;
+                            boton_inicio_seleccionado = false;
+                            // Cambiar al color original.
+                        }
+                        else if (meta.getX() == boton_matriz_seleccionado.getXpos() && meta.getY() == boton_matriz_seleccionado.getYpos())
+                        {    
+                            meta = null;
+                            boton_meta_seleccionado = false;
+                        }
+                        else if (boton_matriz_seleccionado.getBackground().equals(Color.BLACK))
+                        {
+                            for (int i = 0; i< this.listaNodosProhibidos.size();i++)
+                            {
+                                if (this.listaNodosProhibidos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosProhibidos.get(i).getY() == boton_matriz_seleccionado.getYpos())
+                                    this.listaNodosProhibidos.remove(i);
+                            }
+                            // Cambiar al color original.
+                        }
+                        boton_matriz_seleccionado.setBackground(null);
+                        boton_matriz_seleccionado.setForeground(null);
                         break;
 
             }

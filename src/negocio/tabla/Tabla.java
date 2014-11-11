@@ -74,6 +74,19 @@ public class Tabla
         
         return nEstadosCerrados == this.tabla.size();
     }
+    
+    public ArrayList<Estado> getEstadosAbiertos()
+    {
+        ArrayList<Estado> abiertos = new ArrayList<>();
+        
+        for (Estado estado : tabla)
+        {
+            if (estado.isEstaAbierto())
+                abiertos.add(estado);
+        }
+        
+        return abiertos;
+    }
 
     public ArrayList<Estado> getTabla() 
     {
