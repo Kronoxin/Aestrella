@@ -110,21 +110,22 @@ public class Aestrella
         {
             double fmin = 0;
             Nodo nodoOptimo = null;
-            ArrayList<Estado> listaHijos = new ArrayList<>();
+            ArrayList<Estado> listaAbiertos = new ArrayList<>();
             // Cambiar
-            listaHijos = tabla.getHijosDelNodo(nodoOrigen);
+            listaAbiertos = tabla.getEstadosAbiertos();
             
-            Estado primerEstado = devolverEstadoAbierto(listaHijos);
+            Estado primerEstado = devolverEstadoAbierto(listaAbiertos);
             
             if (primerEstado != null)
             {
                 fmin = primerEstado.getDistanciaTotal();
                 nodoOptimo = primerEstado.getNodoActual();
                 
-                for (Estado estadoActual : tabla.getHijosDelNodo(nodoOrigen))
+                for (Estado estadoActual : listaAbiertos)
                 {
                     if (estadoActual.isEstaAbierto() && estadoActual.getDistanciaTotal() < fmin)
-                    {
+                    { 
+                        //estadoActual.setNodoPadre(nodoOrigen);
                         nodoOptimo = estadoActual.getNodoActual();
                         fmin = estadoActual.getDistanciaTotal();
                     }
