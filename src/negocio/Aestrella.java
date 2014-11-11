@@ -104,12 +104,14 @@ public class Aestrella
             
             return estado;
         }
-	
+	// Seleccionar el mejor de los estados abiertos.
+        
         public Nodo seleccionarNodoOptimo(Nodo nodoOrigen)
         {
             double fmin = 0;
             Nodo nodoOptimo = null;
             ArrayList<Estado> listaHijos = new ArrayList<>();
+            // Cambiar
             listaHijos = tabla.getHijosDelNodo(nodoOrigen);
             
             Estado primerEstado = devolverEstadoAbierto(listaHijos);
