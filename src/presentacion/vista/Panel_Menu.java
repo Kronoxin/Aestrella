@@ -25,6 +25,7 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
         Boton_Reset boton_reset = new Boton_Reset();
         Boton_Empezar boton_empezar = new Boton_Empezar();
         Boton_Borrar boton_borrar = new Boton_Borrar();
+        Boton_Waypoints boton_waypoints = new Boton_Waypoints();
         
         public Panel_Menu(){
             
@@ -38,6 +39,7 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
             this.add(boton_prohibidas);
             this.add(boton_restrictivas);
             this.add(boton_borrar);
+            this.add(boton_waypoints);
             this.add(boton_reset);
             this.add(boton_empezar);
         }
@@ -52,7 +54,7 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
        boton_empezar.addActionListener((ActionListener)controlador);        //actionlistener de boton_empezar
        entrada_datos.getBoton_crear().addActionListener((ActionListener)controlador);   //actionlistener boton_crear
        boton_borrar.addActionListener((ActionListener)controlador);
-       
+       boton_waypoints.addActionListener((ActionListener)controlador);
     }
 
     @Override
@@ -78,6 +80,14 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
 
     public Boton_Meta getBoton_meta() {
         return boton_meta;
+    }
+
+    public Boton_Waypoints getBoton_waypoints() {
+        return boton_waypoints;
+    }
+
+    public void setBoton_waypoints(Boton_Waypoints boton_waypoints) {
+        this.boton_waypoints = boton_waypoints;
     }
 
     public void setBoton_meta(Boton_Meta boton_meta) {

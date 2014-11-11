@@ -91,6 +91,10 @@ public class Controlador implements ActionListener{
                 case "Borrar":
                     borrar();
                     break;
+                    
+                case "Waypoints":
+                    marcarWaypoints();
+                    break;
                      
                      
                 default:
@@ -222,6 +226,14 @@ public class Controlador implements ActionListener{
         
     }
     
+    
+    public void marcarWaypoints(){
+        
+        System.out.println("He marcado un Waypoint");
+        activar_desactivar_boton();
+        
+    }
+    
     public void marcarReset(){
         System.out.println("He marcado Reset");
         generarMatriz();
@@ -304,7 +316,16 @@ public class Controlador implements ActionListener{
                         boton_matriz_seleccionado.setBackground(null);
                         boton_matriz_seleccionado.setForeground(null);
                         break;
-
+                        
+                        
+                    case "Waypoints":
+                        
+                        boton_matriz_seleccionado.setBackground(Color.PINK);
+                        boton_matriz_seleccionado.setForeground(Color.BLACK);
+                    //    this.listaNodosWaypoints.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
+                        break;
+                            
+                   
             }
         
         }

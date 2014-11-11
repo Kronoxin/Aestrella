@@ -18,7 +18,7 @@ public class Vista extends JFrame{
 	
 	public Vista(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 700);
+		setBounds(100, 100, 900, 800);
 		contenedorPrincipal = new JPanel();
 		contenedorPrincipal = this.getContentPane();
 		contenedorPrincipal.setLayout(new BorderLayout(0,0));
