@@ -26,7 +26,7 @@ public class Aestrella
 	Nodo inicio;
 	Nodo meta;
 	
-	public Aestrella(Nodo inicio, Nodo meta, ArrayList<Nodo> casillasProhibidas,int sizeX,int sizeY)
+	public Aestrella(Nodo inicio, Nodo meta, ArrayList<Nodo> casillasProhibidas,ArrayList<Nodo> casillasRestrictivas, int sizeX,int sizeY)
 	{
                 this.sizeX = sizeX;
                 this.sizeY = sizeY;
@@ -41,6 +41,11 @@ public class Aestrella
                 {
 			campo[nodo.getX()][nodo.getY()] = -1;
                         numeroCasillasCerradas++;
+                }
+                
+                for (Nodo nodo : casillasRestrictivas)
+                {
+                    campo[nodo.getX()][nodo.getY()] = 10;
                 }
 		
 		campo[inicio.getX()][inicio.getY()] = 1;
@@ -77,7 +82,7 @@ public class Aestrella
                                     // Le sumamos la distancia ya recorrida por el padre para tener el recorrido total.
                                     disOr += this.tabla.getEstadoDelNodo(nodo).getDistanciaOrigen();
                                     // Calculamos la distancia entre el nodo actual y el nodo final.
-                                    disDest = distanciaEuclidea(nodoNuevo,meta);
+                                    disDest = distanciaEuclidea(nodoNuevo,meta) + campo[nodoNuevo.getX()][nodoNuevo.getY()];
 
 
                                     // Instanciamos un nuevo estado abierto, con el nodo actual, el nodo padre y las distancias.

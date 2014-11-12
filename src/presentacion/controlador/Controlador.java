@@ -14,14 +14,17 @@ import java.util.EventObject;
 import javax.swing.JButton;
 import negocio.Aestrella;
 import negocio.estado.Nodo;
+import presentacion.TipoBoton;
 import presentacion.vista.Boton_Matriz;
+import presentacion.vista.Ventana_Error;
 import presentacion.vista.Vista;
 
 /**
  *
  * @author Ruben
  */
-public class Controlador implements ActionListener{
+public class Controlador implements ActionListener
+{
      Vista vista = new Vista();
     JButton boton_seleccionado;
     ActionEvent evento;
@@ -31,6 +34,7 @@ public class Controlador implements ActionListener{
     boolean boton_meta_seleccionado = false;
     
     private ArrayList<Nodo> listaNodosProhibidos;
+    private ArrayList<Nodo> listaNodosRestrictivos;
     private Nodo inicio;
     private Nodo meta;
     private int x,y;
@@ -40,6 +44,7 @@ public class Controlador implements ActionListener{
     public Controlador(){
         super();
         listaNodosProhibidos = new ArrayList<>();
+        listaNodosRestrictivos = new ArrayList<>();
         vista.getPanel_menu().asignarControlador(this);
     }
     
@@ -125,7 +130,8 @@ public class Controlador implements ActionListener{
         hacerCambiosEnModelo(fuente);
     }
     
-    public void capturarBotonMatriz (){
+    public void capturarBotonMatriz ()
+    {
         
         boton_matriz_seleccionado = ((Boton_Matriz)evento.getSource());
         
@@ -159,7 +165,8 @@ public class Controlador implements ActionListener{
         
     }
     
-    public void generarMatriz(){
+    public void generarMatriz()
+    {
               
             //Se obtiene la cantidad de filas y columnas a crear
         String f= vista.getPanel_menu().getEntrada_datos().getTxt_filas().getText();
@@ -175,11 +182,12 @@ public class Controlador implements ActionListener{
             //generamos la matriz con los datos introducidos
             vista.getPanel_matriz_botones().generarMatrizDeBotones(filas, columnas, this);
             
-            boton_inicio_seleccionado = false;
+        boton_inicio_seleccionado = false;
         boton_meta_seleccionado = false;
         this.inicio = null;
         this.meta = null;
         this.listaNodosProhibidos = new ArrayList<>();
+        this.listaNodosRestrictivos = new ArrayList<>();
         
     }
     
@@ -187,9 +195,19 @@ public class Controlador implements ActionListener{
     {
         borrarRecorrido();
         System.out.println("He marcado Empezar");
-        Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos,this.x,this.y);
-        recorrido = algoritmo.recorrer();
-        pintarRecorrido();
+        if (this.inicio != null && this.meta != null && this.x > 0 && this.y > 0)
+        {
+            Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos,this.listaNodosRestrictivos,this.x,this.y);
+            recorrido = algoritmo.recorrer();
+            if (recorrido == null)
+                Ventana_Error.mostrarErrorMetaInalcanzable();
+            pintarRecorrido();
+        }
+        else
+        {
+            Ventana_Error.mostrarErrorParametrosIncorrectos();
+        }
+        
         
         
     }
@@ -197,25 +215,25 @@ public class Controlador implements ActionListener{
     private void pintarRecorrido()
     {
         if (recorrido != null && recorrido.size() > 0)
+            {
+                for (Nodo nodo : recorrido)
                 {
-                    for (Nodo nodo : recorrido){
-
-                        if(!(nodo.equals(inicio) || nodo.equals(meta)))
-                            vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(Color.red);
-                    }
+                    if(!(nodo.equals(inicio) || nodo.equals(meta)))
+                        vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(Color.red);
                 }
+            }
     }
     
     private void borrarRecorrido()
     {
         if (recorrido != null && recorrido.size() > 0)
-                {
-                    for (Nodo nodo : recorrido){
-
-                        if(!(nodo.equals(inicio) || nodo.equals(meta)))
-                            vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(null);
-                    }
-                }
+        {
+            for (Nodo nodo : recorrido)
+            {
+                if(!(nodo.equals(inicio) || nodo.equals(meta)))
+                    vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(null);
+            }
+        }
     }
     
     public void borrar(){
@@ -262,69 +280,95 @@ public class Controlador implements ActionListener{
                 {
                     //actionlistener de los Botones_Matriz
                     case "Inicio":
-                        if(boton_inicio_seleccionado == false){
+                        if(boton_inicio_seleccionado == false)
+                        {
                             boton_matriz_seleccionado.setBackground(Color.YELLOW);
                             boton_inicio_seleccionado = true;
                             this.inicio = new Nodo(boton_matriz_seleccionado.getXpos(), boton_matriz_seleccionado.getYpos());
+                            boton_matriz_seleccionado.setTipo(TipoBoton.INICIO);
                         }
                         
            
                         break;
 
                     case "Meta":
-                        if(boton_meta_seleccionado == false){
+                        if(boton_meta_seleccionado == false)
+                        {
                             boton_matriz_seleccionado.setBackground(Color.GREEN);
                             boton_meta_seleccionado = true;
                             this.meta = new Nodo(boton_matriz_seleccionado.getXpos(), boton_matriz_seleccionado.getYpos());
+                            boton_matriz_seleccionado.setTipo(TipoBoton.META);
                         }
                         
                         break;
 
                     case "Prohibidas":
-                        boton_matriz_seleccionado.setBackground(Color.BLACK);
-                        boton_matriz_seleccionado.setForeground(Color.WHITE);
-                        this.listaNodosProhibidos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
+                        // Si la casilla no es una casilla prohibida.
+                        if(boton_matriz_seleccionado.getTipo().compareTo(TipoBoton.PROHIBIDA) != 0)
+                        {
+                            boton_matriz_seleccionado.setBackground(Color.BLACK);
+                            boton_matriz_seleccionado.setForeground(Color.WHITE);
+                            this.listaNodosProhibidos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
+                            boton_matriz_seleccionado.setTipo(TipoBoton.PROHIBIDA);
+                        }
                         break;
 
                     case "Restrictivas":
                         
-                        boton_matriz_seleccionado.setBackground(Color.GRAY);
-                        boton_matriz_seleccionado.setForeground(Color.BLACK);
+                        
+                        if(boton_matriz_seleccionado.getTipo().compareTo(TipoBoton.RESTRICTIVA) != 0)
+                        {
+                            boton_matriz_seleccionado.setBackground(Color.GRAY);
+                            boton_matriz_seleccionado.setForeground(Color.BLACK);
+                            this.listaNodosRestrictivos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
+                            boton_matriz_seleccionado.setTipo(TipoBoton.RESTRICTIVA);
+                        }
                         break;
                         
                     case "Borrar":
-                        if (inicio.getX() == boton_matriz_seleccionado.getXpos() && inicio.getY() == boton_matriz_seleccionado.getYpos())
+                        switch(boton_matriz_seleccionado.getTipo())
                         {
-                            inicio = null;
-                            boton_inicio_seleccionado = false;
-                            // Cambiar al color original.
-                        }
-                        else if (meta.getX() == boton_matriz_seleccionado.getXpos() && meta.getY() == boton_matriz_seleccionado.getYpos())
-                        {    
-                            meta = null;
-                            boton_meta_seleccionado = false;
-                        }
-                        else if (boton_matriz_seleccionado.getBackground().equals(Color.BLACK))
-                        {
-                            for (int i = 0; i< this.listaNodosProhibidos.size();i++)
-                            {
-                                if (this.listaNodosProhibidos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosProhibidos.get(i).getY() == boton_matriz_seleccionado.getYpos())
-                                    this.listaNodosProhibidos.remove(i);
-                            }
-                            // Cambiar al color original.
+                            case INICIO:
+                                borrarRecorrido();
+                                inicio = null;
+                                boton_inicio_seleccionado = false;
+                            break;
+                                
+                            case META:
+                                borrarRecorrido();
+                                meta = null;
+                                boton_meta_seleccionado = false;
+                            break;
+                              
+                            case PROHIBIDA:
+                                for (int i = 0; i< this.listaNodosProhibidos.size();i++)
+                                {
+                                    if (this.listaNodosProhibidos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosProhibidos.get(i).getY() == boton_matriz_seleccionado.getYpos())
+                                        this.listaNodosProhibidos.remove(i);
+                                }
+                            break;
+                                
+                            case RESTRICTIVA:
+                                for (int i = 0; i< this.listaNodosRestrictivos.size();i++)
+                                {
+                                    if (this.listaNodosRestrictivos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosRestrictivos.get(i).getY() == boton_matriz_seleccionado.getYpos())
+                                        this.listaNodosRestrictivos.remove(i);
+                                }
+                            break;
+                                
+                            case WAYPOINT:
+                            
+                            break;
+                                
+                            default:
+                                
+                            break;
+                            
                         }
                         boton_matriz_seleccionado.setBackground(null);
                         boton_matriz_seleccionado.setForeground(null);
-                        break;
-                        
-                        
-                    case "Waypoints":
-                        
-                        boton_matriz_seleccionado.setBackground(Color.PINK);
-                        boton_matriz_seleccionado.setForeground(Color.BLACK);
-                    //    this.listaNodosWaypoints.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
-                        break;
-                            
+                        boton_matriz_seleccionado.setTipo(TipoBoton.NINGUNO);
+                       
                    
             }
         

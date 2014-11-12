@@ -9,6 +9,8 @@ public class Nodo
 {
 	private int x;
 	private int y;
+        
+        private int valor;
 	
 	
 	public Nodo(int x, int y) 
@@ -40,6 +42,15 @@ public class Nodo
         {
             return a.getX() == this.getX() && a.getY() == this.getY();
         }
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+        
 	
 	
 }
