@@ -368,8 +368,15 @@ public class Controlador implements ActionListener
                         boton_matriz_seleccionado.setBackground(null);
                         boton_matriz_seleccionado.setForeground(null);
                         boton_matriz_seleccionado.setTipo(TipoBoton.NINGUNO);
+                        
                        
-                   
+                    case "Waypoints":
+                        
+                        boton_matriz_seleccionado.setBackground(Color.PINK);
+                        boton_matriz_seleccionado.setForeground(Color.BLACK);
+  
+                        break;
+                        
             }
         
         }

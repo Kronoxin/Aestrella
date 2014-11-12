@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.EventListener;
 import java.util.Observable;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 
 /**
  *
@@ -26,11 +27,17 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
         Boton_Empezar boton_empezar = new Boton_Empezar();
         Boton_Borrar boton_borrar = new Boton_Borrar();
         Boton_Waypoints boton_waypoints = new Boton_Waypoints();
+        JSpinner spinner_restrictivas = new JSpinner();
         
         public Panel_Menu(){
             
             //Añado el toolbar
+         
             this.add(entrada_datos, BorderLayout.PAGE_START);
+            
+            spinner_restrictivas.setSize(10,10);
+            spinner_restrictivas.setValue(10);
+       
             
             //añado los botones Inicio, Meta, Prohibidas y Restrictivas al panel_menu
             
@@ -38,6 +45,7 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
             this.add(boton_meta);
             this.add(boton_prohibidas);
             this.add(boton_restrictivas);
+            this.add(spinner_restrictivas);
             this.add(boton_borrar);
             this.add(boton_waypoints);
             this.add(boton_reset);
@@ -128,6 +136,14 @@ public class Panel_Menu extends JPanel implements InterfazObservadorVista{
 
     public void setBoton_borrar(Boton_Borrar boton_borrar) {
         this.boton_borrar = boton_borrar;
+    }
+
+    public JSpinner getSpinner_restrictivas() {
+        return spinner_restrictivas;
+    }
+
+    public void setSpinner_restrictivas(JSpinner spinner_restrictivas) {
+        this.spinner_restrictivas = spinner_restrictivas;
     }
     
      
