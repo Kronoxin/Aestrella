@@ -189,6 +189,7 @@ public class Controlador implements ActionListener
         this.meta = null;
         this.listaNodosProhibidos = new ArrayList<>();
         this.listaNodosRestrictivos = new ArrayList<>();
+        this.recorrido = null;
         
     }
     
