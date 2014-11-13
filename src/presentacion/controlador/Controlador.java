@@ -41,7 +41,8 @@ public class Controlador implements ActionListener
     ArrayList<Nodo> recorrido;
 
      
-    public Controlador(){
+    public Controlador()
+    {
         super();
         listaNodosProhibidos = new ArrayList<>();
         listaNodosRestrictivos = new ArrayList<>();
@@ -191,14 +192,24 @@ public class Controlador implements ActionListener
         
     }
     
+    private void rellenarValorRestrictivas(int valor)
+    {
+        for (Nodo nodo : this.listaNodosRestrictivos)
+            nodo.setValor(valor);
+    }
+    
     public void empezar()
     {
         borrarRecorrido();
         System.out.println("He marcado Empezar");
-        if (this.inicio != null && this.meta != null && this.x > 0 && this.y > 0)
+        int valorRestrictiva = (int)this.vista.getPanel_menu().getSpinner_restrictivas().getValue();
+        rellenarValorRestrictivas(valorRestrictiva);
+        
+        if (this.inicio != null && this.meta != null && this.x > 0 && this.y > 0 && valorRestrictiva >= 0)
         {
             Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos,this.listaNodosRestrictivos,this.x,this.y);
             recorrido = algoritmo.recorrer();
+            
             if (recorrido == null)
                 Ventana_Error.mostrarErrorMetaInalcanzable();
             pintarRecorrido();

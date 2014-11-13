@@ -45,7 +45,7 @@ public class Aestrella
                 
                 for (Nodo nodo : casillasRestrictivas)
                 {
-                    campo[nodo.getX()][nodo.getY()] = 10;
+                    campo[nodo.getX()][nodo.getY()] = nodo.getValor();
                 }
 		
 		campo[inicio.getX()][inicio.getY()] = 1;

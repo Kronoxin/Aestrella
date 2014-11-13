@@ -43,11 +43,13 @@ public class Nodo
             return a.getX() == this.getX() && a.getY() == this.getY();
         }
 
-    public int getValor() {
+    public int getValor() 
+    {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(int valor) 
+    {
         this.valor = valor;
     }
         
