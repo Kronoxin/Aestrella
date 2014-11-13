@@ -315,6 +315,8 @@ public class Controlador implements ActionListener
                             this.listaNodosProhibidos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
                             boton_matriz_seleccionado.setTipo(TipoBoton.PROHIBIDA);
                         }
+                        
+                        
                         break;
 
                     case "Restrictivas":
