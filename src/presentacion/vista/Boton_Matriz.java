@@ -25,6 +25,13 @@ public class Boton_Matriz extends JButton
             this.x = x;
             this.y = y;
         }
+        
+        public void pintate()
+        {
+            setBackground(TipoBoton.getColorFondo(this.tipo));
+            setForeground(TipoBoton.getColorTexto(this.tipo));
+                            
+        }
        
         public int getXpos()
         {

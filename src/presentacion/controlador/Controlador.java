@@ -227,13 +227,8 @@ public class Controlador implements ActionListener
     private void borrarRecorrido()
     {
         if (recorrido != null && recorrido.size() > 0)
-        {
             for (Nodo nodo : recorrido)
-            {
-                if(!(nodo.equals(inicio) || nodo.equals(meta)))
-                    vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(null);
-            }
-        }
+                vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].pintate();
     }
     
     public void borrar(){
@@ -269,7 +264,8 @@ public class Controlador implements ActionListener
     }
     
     //Aqui es donde cojo cada boton_matriz que utilizo
-    public void verloquetengoquehacer(){
+    public void verloquetengoquehacer()
+    {
         
         if(boton_seleccionado == null){
             System.out.println("No has seleccionado ninguna opción del menu");
@@ -282,7 +278,6 @@ public class Controlador implements ActionListener
                     case "Inicio":
                         if(boton_inicio_seleccionado == false)
                         {
-                            boton_matriz_seleccionado.setBackground(Color.YELLOW);
                             boton_inicio_seleccionado = true;
                             this.inicio = new Nodo(boton_matriz_seleccionado.getXpos(), boton_matriz_seleccionado.getYpos());
                             boton_matriz_seleccionado.setTipo(TipoBoton.INICIO);
@@ -294,7 +289,6 @@ public class Controlador implements ActionListener
                     case "Meta":
                         if(boton_meta_seleccionado == false)
                         {
-                            boton_matriz_seleccionado.setBackground(Color.GREEN);
                             boton_meta_seleccionado = true;
                             this.meta = new Nodo(boton_matriz_seleccionado.getXpos(), boton_matriz_seleccionado.getYpos());
                             boton_matriz_seleccionado.setTipo(TipoBoton.META);
@@ -306,20 +300,15 @@ public class Controlador implements ActionListener
                         // Si la casilla no es una casilla prohibida.
                         if(boton_matriz_seleccionado.getTipo().compareTo(TipoBoton.PROHIBIDA) != 0)
                         {
-                            boton_matriz_seleccionado.setBackground(Color.BLACK);
-                            boton_matriz_seleccionado.setForeground(Color.WHITE);
                             this.listaNodosProhibidos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
                             boton_matriz_seleccionado.setTipo(TipoBoton.PROHIBIDA);
                         }
                         break;
 
                     case "Restrictivas":
-                        
-                        
+                       
                         if(boton_matriz_seleccionado.getTipo().compareTo(TipoBoton.RESTRICTIVA) != 0)
                         {
-                            boton_matriz_seleccionado.setBackground(Color.GRAY);
-                            boton_matriz_seleccionado.setForeground(Color.BLACK);
                             this.listaNodosRestrictivos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
                             boton_matriz_seleccionado.setTipo(TipoBoton.RESTRICTIVA);
                         }
@@ -365,19 +354,17 @@ public class Controlador implements ActionListener
                                 break;
 
                             }
-                            boton_matriz_seleccionado.setBackground(null);
-                            boton_matriz_seleccionado.setForeground(null);
+                            
                             boton_matriz_seleccionado.setTipo(TipoBoton.NINGUNO);
-                            break;
+                    break;
 
                        
-                    case "Waypoints":
+                    case "Waypoints":  
                         
-                        boton_matriz_seleccionado.setBackground(Color.PINK);
-                        boton_matriz_seleccionado.setForeground(Color.BLACK);
-  
-                        break;
+                    break;
             }
+            
+            boton_matriz_seleccionado.pintate();
         
         }
     }

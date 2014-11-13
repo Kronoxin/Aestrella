@@ -5,6 +5,8 @@
  */
 package presentacion;
 
+import java.awt.Color;
+
 /**
  *
  * @author Krnx
@@ -12,4 +14,48 @@ package presentacion;
 public enum TipoBoton 
 {
     INICIO,META,PROHIBIDA,RESTRICTIVA,WAYPOINT, NINGUNO;
+    
+    public static Color getColorFondo(TipoBoton tipo)
+    {
+        Color color = null;
+        
+        switch(tipo)
+        {
+            case INICIO:
+                color = Color.YELLOW;
+            break;
+                
+            case META:
+                color = Color.GREEN;
+            break;
+                
+            case PROHIBIDA:
+                color = Color.BLACK;
+            break;
+                
+            case RESTRICTIVA:
+                color = Color.GRAY;
+            break;
+                
+            case WAYPOINT:
+                color = Color.PINK;
+            break;
+        }
+        
+        return color;
+    }
+    
+    public static Color getColorTexto(TipoBoton tipo)
+    {
+        Color color = null;
+        
+        switch(tipo)
+        {
+            case PROHIBIDA:
+                color = Color.WHITE;
+            break;
+        }
+        
+        return color;
+    }
 }
