@@ -326,49 +326,50 @@ public class Controlador implements ActionListener
                         break;
                         
                     case "Borrar":
-                        switch(boton_matriz_seleccionado.getTipo())
-                        {
-                            case INICIO:
-                                borrarRecorrido();
-                                inicio = null;
-                                boton_inicio_seleccionado = false;
+                            switch(boton_matriz_seleccionado.getTipo())
+                            {
+                                case INICIO:
+                                    borrarRecorrido();
+                                    inicio = null;
+                                    boton_inicio_seleccionado = false;
+                                break;
+
+                                case META:
+                                    borrarRecorrido();
+                                    meta = null;
+                                    boton_meta_seleccionado = false;
+                                break;
+
+                                case PROHIBIDA:
+                                    for (int i = 0; i< this.listaNodosProhibidos.size();i++)
+                                    {
+                                        if (this.listaNodosProhibidos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosProhibidos.get(i).getY() == boton_matriz_seleccionado.getYpos())
+                                            this.listaNodosProhibidos.remove(i);
+                                    }
+                                break;
+
+                                case RESTRICTIVA:
+                                    for (int i = 0; i< this.listaNodosRestrictivos.size();i++)
+                                    {
+                                        if (this.listaNodosRestrictivos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosRestrictivos.get(i).getY() == boton_matriz_seleccionado.getYpos())
+                                            this.listaNodosRestrictivos.remove(i);
+                                    }
+                                break;
+
+                                case WAYPOINT:
+
+                                break;
+
+                                default:
+
+                                break;
+
+                            }
+                            boton_matriz_seleccionado.setBackground(null);
+                            boton_matriz_seleccionado.setForeground(null);
+                            boton_matriz_seleccionado.setTipo(TipoBoton.NINGUNO);
                             break;
-                                
-                            case META:
-                                borrarRecorrido();
-                                meta = null;
-                                boton_meta_seleccionado = false;
-                            break;
-                              
-                            case PROHIBIDA:
-                                for (int i = 0; i< this.listaNodosProhibidos.size();i++)
-                                {
-                                    if (this.listaNodosProhibidos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosProhibidos.get(i).getY() == boton_matriz_seleccionado.getYpos())
-                                        this.listaNodosProhibidos.remove(i);
-                                }
-                            break;
-                                
-                            case RESTRICTIVA:
-                                for (int i = 0; i< this.listaNodosRestrictivos.size();i++)
-                                {
-                                    if (this.listaNodosRestrictivos.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaNodosRestrictivos.get(i).getY() == boton_matriz_seleccionado.getYpos())
-                                        this.listaNodosRestrictivos.remove(i);
-                                }
-                            break;
-                                
-                            case WAYPOINT:
-                            
-                            break;
-                                
-                            default:
-                                
-                            break;
-                            
-                        }
-                        boton_matriz_seleccionado.setBackground(null);
-                        boton_matriz_seleccionado.setForeground(null);
-                        boton_matriz_seleccionado.setTipo(TipoBoton.NINGUNO);
-                        
+
                        
                     case "Waypoints":
                         
@@ -376,7 +377,6 @@ public class Controlador implements ActionListener
                         boton_matriz_seleccionado.setForeground(Color.BLACK);
   
                         break;
-                        
             }
         
         }
