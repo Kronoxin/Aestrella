@@ -28,6 +28,11 @@ public class Ventana_Error{
       JOptionPane.showMessageDialog(null, "Meta Inalcanzable","Error",JOptionPane.ERROR_MESSAGE);
       
     }
+    public static void mostrarErrorCaminoParcial(){
+
+      JOptionPane.showMessageDialog(null, "No he podido llegar a la meta, pero si a un Waypoint","Error",JOptionPane.ERROR_MESSAGE);
+      
+    }
     
     public static void mostrarErrorParametrosIncorrectos()
     {

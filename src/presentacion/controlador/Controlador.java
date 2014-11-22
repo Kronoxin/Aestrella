@@ -35,6 +35,7 @@ public class Controlador implements ActionListener
     
     private ArrayList<Nodo> listaNodosProhibidos;
     private ArrayList<Nodo> listaNodosRestrictivos;
+    private ArrayList<Nodo> listaWaypoints;
     private Nodo inicio;
     private Nodo meta;
     private int x,y;
@@ -44,6 +45,7 @@ public class Controlador implements ActionListener
     public Controlador()
     {
         super();
+        listaWaypoints = new ArrayList<>();
         listaNodosProhibidos = new ArrayList<>();
         listaNodosRestrictivos = new ArrayList<>();
         vista.getPanel_menu().asignarControlador(this);
@@ -189,6 +191,7 @@ public class Controlador implements ActionListener
         this.meta = null;
         this.listaNodosProhibidos = new ArrayList<>();
         this.listaNodosRestrictivos = new ArrayList<>();
+        this.listaWaypoints = new ArrayList<>();
         this.recorrido = null;
         
     }
@@ -202,17 +205,25 @@ public class Controlador implements ActionListener
     public void empezar()
     {
         borrarRecorrido();
+        this.recorrido = null;
+        
         System.out.println("He marcado Empezar");
         int valorRestrictiva = (int)this.vista.getPanel_menu().getSpinner_restrictivas().getValue();
         rellenarValorRestrictivas(valorRestrictiva);
         
         if (this.inicio != null && this.meta != null && this.x > 0 && this.y > 0 && valorRestrictiva >= 0)
         {
-            Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos,this.listaNodosRestrictivos,this.x,this.y);
+            this.listaWaypoints.add(meta);
+            Aestrella algoritmo = new Aestrella(this.inicio,this.meta,this.listaNodosProhibidos,this.listaNodosRestrictivos,this.listaWaypoints,this.x,this.y);
             recorrido = algoritmo.recorrer();
+            this.listaWaypoints.remove(meta);
             
-            if (recorrido == null)
+            if (recorrido.size() == 0)
                 Ventana_Error.mostrarErrorMetaInalcanzable();
+            
+            else if (!recorrido.get(recorrido.size()-1).equals(meta))
+                Ventana_Error.mostrarErrorCaminoParcial();
+            
             pintarRecorrido();
         }
         else
@@ -224,13 +235,26 @@ public class Controlador implements ActionListener
         
     }
     
+    private boolean listaContieneNodo(ArrayList<Nodo> lista, Nodo nodo)
+    {
+        boolean contiene = false;
+        int i = 0;
+        while(!contiene && i < lista.size())
+        {
+            if (lista.get(i).equals(nodo))
+                contiene = true;
+            i++;
+        }
+        return contiene;
+    }
+    
     private void pintarRecorrido()
     {
         if (recorrido != null && recorrido.size() > 0)
             {
                 for (Nodo nodo : recorrido)
                 {
-                    if(!(nodo.equals(inicio) || nodo.equals(meta)))
+                    if(!(nodo.equals(inicio) || listaContieneNodo(this.listaWaypoints,nodo) || nodo.equals(meta)))
                         vista.getPanel_matriz_botones().getMatriz()[nodo.getX()][nodo.getY()].setBackground(Color.red);
                 }
             }
@@ -326,7 +350,15 @@ public class Controlador implements ActionListener
                             this.listaNodosRestrictivos.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
                             boton_matriz_seleccionado.setTipo(TipoBoton.RESTRICTIVA);
                         }
-                        break;
+                    break;
+                        
+                    case "Waypoints":
+                        if(boton_matriz_seleccionado.getTipo().compareTo(TipoBoton.WAYPOINT) != 0)
+                        {
+                            this.listaWaypoints.add(new Nodo(boton_matriz_seleccionado.getXpos(),boton_matriz_seleccionado.getYpos()));
+                            boton_matriz_seleccionado.setTipo(TipoBoton.WAYPOINT);
+                        }
+                    break;
                         
                     case "Borrar":
                             switch(boton_matriz_seleccionado.getTipo())
@@ -360,7 +392,11 @@ public class Controlador implements ActionListener
                                 break;
 
                                 case WAYPOINT:
-
+                                    for (int i = 0; i< this.listaWaypoints.size();i++)
+                                    {
+                                        if (this.listaWaypoints.get(i).getX() == boton_matriz_seleccionado.getXpos() && this.listaWaypoints.get(i).getY() == boton_matriz_seleccionado.getYpos())
+                                            this.listaWaypoints.remove(i);
+                                    }
                                 break;
 
                                 default:
@@ -372,10 +408,7 @@ public class Controlador implements ActionListener
                             boton_matriz_seleccionado.setTipo(TipoBoton.NINGUNO);
                     break;
 
-                       
-                    case "Waypoints":  
-                        
-                    break;
+                    
             }
             
             boton_matriz_seleccionado.pintate();

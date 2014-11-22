@@ -20,18 +20,21 @@ public class Aestrella
 	private int sizeY;
 	
 	ArrayList<Nodo> casillasProhibidas;
+        ArrayList<Nodo> waypoints;
 	
 	Tabla tabla;
 	
 	Nodo inicio;
 	Nodo meta;
+        Nodo metaActual;
 	
-	public Aestrella(Nodo inicio, Nodo meta, ArrayList<Nodo> casillasProhibidas,ArrayList<Nodo> casillasRestrictivas, int sizeX,int sizeY)
+	public Aestrella(Nodo inicio, Nodo meta, ArrayList<Nodo> casillasProhibidas,ArrayList<Nodo> casillasRestrictivas,ArrayList<Nodo> waypoints, int sizeX,int sizeY)
 	{
                 this.sizeX = sizeX;
                 this.sizeY = sizeY;
                 
 		campo = new int[sizeX][sizeY];
+                this.waypoints = waypoints;
 		
                 this.casillasProhibidas = casillasProhibidas;
                 tabla = new Tabla();
@@ -52,8 +55,6 @@ public class Aestrella
 		campo[meta.getX()][meta.getY()] = 2;
 		this.inicio = inicio;
 		this.meta = meta;
-                // Incrementamos una casilla cerrada para contabilizar la meta
-                numeroCasillasCerradas++;
 		
 	}
         public double distanciaEuclidea(Nodo a, Nodo b)
@@ -61,7 +62,7 @@ public class Aestrella
             return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
         }
 	
-	public void generarPosibles(Nodo nodo)
+	public void generarPosibles(Nodo nodo, Nodo metaActual)
 	{
             Nodo nodoNuevo;
                 // Recorro las posiciones adyacentes al nodo.
@@ -76,19 +77,22 @@ public class Aestrella
                                 // Si no existe ya en la tabla el nodo Nuevo, se inserta.
                                 if (tabla.getEstadoDelNodo(nodoNuevo) == null)
                                 {
-                                    double disOr,disDest;
-                                    // Calculamos la distancia desde el nodo actual al padre.
-                                    disOr = distanciaEuclidea(nodo,nodoNuevo);
-                                    // Le sumamos la distancia ya recorrida por el padre para tener el recorrido total.
-                                    disOr += this.tabla.getEstadoDelNodo(nodo).getDistanciaOrigen();
-                                    // Calculamos la distancia entre el nodo actual y el nodo final.
-                                    disDest = distanciaEuclidea(nodoNuevo,meta) + campo[nodoNuevo.getX()][nodoNuevo.getY()];
+                                       
+                                        double disOr,disDest;
+                                        // Calculamos la distancia desde el nodo actual al padre.
+                                        disOr = distanciaEuclidea(nodo,nodoNuevo);
+                                        // Le sumamos la distancia ya recorrida por el padre para tener el recorrido total.
+                                        disOr += this.tabla.getEstadoDelNodo(nodo).getDistanciaOrigen();
+                                        // Calculamos la distancia entre el nodo actual y el nodo final.
+                                        disDest = distanciaEuclidea(nodoNuevo,metaActual) + campo[nodoNuevo.getX()][nodoNuevo.getY()];
 
 
-                                    // Instanciamos un nuevo estado abierto, con el nodo actual, el nodo padre y las distancias.
-                                    Estado estado = new Estado(true,new Nodo(fila,columna),new Nodo(nodo.getX(),nodo.getY()),disOr,disDest,disOr+disDest);
-                                    // Lo agregamos a la tabla.
-                                    tabla.getTabla().add(estado);
+                                        // Instanciamos un nuevo estado abierto, con el nodo actual, el nodo padre y las distancias.
+                                        Estado estado = new Estado(true,new Nodo(fila,columna),new Nodo(nodo.getX(),nodo.getY()),disOr,disDest,disOr+disDest);
+                                        // Lo agregamos a la tabla.
+                                        if (!(nodoNuevo.equals(meta) && !metaActual.equals(meta)))
+                                            tabla.getTabla().add(estado);
+                                    
                                 }
                             }
 			}
@@ -130,7 +134,6 @@ public class Aestrella
                 {
                     if (estadoActual.isEstaAbierto() && estadoActual.getDistanciaTotal() < fmin)
                     { 
-                        //estadoActual.setNodoPadre(nodoOrigen);
                         nodoOptimo = estadoActual.getNodoActual();
                         fmin = estadoActual.getDistanciaTotal();
                     }
@@ -154,45 +157,63 @@ public class Aestrella
         
         public ArrayList<Nodo> recorrer()
 	{
-		Estado estado = new Estado(false,inicio,inicio,0,distanciaEuclidea(inicio,meta),distanciaEuclidea(inicio,meta));
-                
-                this.tabla.getTabla().add(estado);
-                
-                numeroCasillasCerradas++;
+            
+                //this.waypoints.add(meta);
+		
+                Estado estado;
+               
                 
                 Nodo nodoActual = inicio;
                 Nodo nodoTemp;
-                ArrayList<Nodo> caminoElegido = null;
+                ArrayList<Nodo> caminoElegido = new ArrayList<>();
+                Nodo metaAnterior = null;
                 
-                generarPosibles(nodoActual);
                 
-                while(!tabla.todosEstadosCerrados() && !nodoActual.equals(meta))
-                {  
-                    
-                    nodoTemp = seleccionarNodoOptimo(nodoActual);
-                    
-                    // No se puede escoger ningun hijo de este nodo
-                    if (nodoTemp == null)
-                    {// Cogemos el nodo padre
-                        nodoActual = tabla.getEstadoDelNodo(nodoActual).getNodoPadre();
-                    }
-                    else
-                    {
-                        nodoActual = nodoTemp;
-                        tabla.getEstadoDelNodo(nodoActual).setEstaAbierto(false);
-                        numeroCasillasCerradas++;
-                        generarPosibles(nodoActual);
-                    }
-                }
-                if (nodoActual.equals(meta))
+                
+                for (Nodo metaActual: this.waypoints)
                 {
-                    caminoElegido = tabla.getRecorridoDelNodo(nodoActual);
-                    caminoElegido = invertirLista(caminoElegido);
+                    if (metaAnterior != null)
+                        inicio = metaAnterior;
+                    
+                    estado = new Estado(false,inicio,inicio,0,distanciaEuclidea(inicio,metaActual),distanciaEuclidea(inicio,metaActual));
+                    this.tabla.getTabla().add(estado);
+                    
+            
+                    generarPosibles(nodoActual,metaActual);
+                    
+                    
+                    while(!tabla.todosEstadosCerrados() && !nodoActual.equals(metaActual))
+                    {  
+
+                        nodoTemp = seleccionarNodoOptimo(nodoActual);
+
+                        // No se puede escoger ningun hijo de este nodo
+                        if (nodoTemp == null)
+                        {// Cogemos el nodo padre
+                            nodoActual = tabla.getEstadoDelNodo(nodoActual).getNodoPadre();
+                        }
+                        else
+                        {
+                            nodoActual = nodoTemp;
+                            tabla.getEstadoDelNodo(nodoActual).setEstaAbierto(false);
+                            generarPosibles(nodoActual,metaActual);
+                        }
+                    }
+                
+                    if (nodoActual.equals(metaActual))
+                    {
+                        for (Nodo nodoAdd: invertirLista(tabla.getRecorridoDelNodo(nodoActual)))
+                            caminoElegido.add(nodoAdd);
+                        
+                        ArrayList<Estado> estadosYaCerrados = tabla.getEstadosDeListaDeNodos(caminoElegido);
+                        
+                        this.tabla = new Tabla();
+                        this.tabla.setTabla(estadosYaCerrados);
+                        metaAnterior = new Nodo(metaActual);
+                        
+                    }                                 
                 }
                 
-                if(tabla.todosEstadosCerrados())
-                    System.out.println("NO ENCONTRE LA META");
-		return caminoElegido;
-		
+                return caminoElegido;		
 	}
 }

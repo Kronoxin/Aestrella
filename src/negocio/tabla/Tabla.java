@@ -21,6 +21,33 @@ public class Tabla
         tabla = new ArrayList<>();
     }
     
+    
+    public ArrayList<Estado> getEstadosDeListaDeNodos(ArrayList<Nodo> listaNodos)
+    {
+        ArrayList<Estado> listaEstados = new ArrayList<>();
+        for (Nodo nodo : listaNodos)
+        {
+            for(Estado estado : tabla)
+            {
+                if (estado.getNodoActual().equals(nodo))
+                    listaEstados.add(estado);
+            }
+        }
+        return listaEstados;
+    }
+    
+    
+    public ArrayList<Estado> getEstadosCerrados()
+    {
+        ArrayList<Estado> estadosCerrados = new ArrayList<>();
+        
+        for (Estado estado : tabla)
+            if (!estado.isEstaAbierto())
+                estadosCerrados.add(estado);
+        
+        return estadosCerrados;
+    }
+    
     public ArrayList<Estado> getHijosDelNodo(Nodo nodoPadre) 
     {
         ArrayList<Estado> hijos = new ArrayList<>();
